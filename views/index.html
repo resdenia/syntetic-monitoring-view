@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Metrics sender</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+	<header class="header">
+		<div class="logo"><svg width="43" height="43" viewBox="0 0 43 43" fill="none"
+				xmlns="http://www.w3.org/2000/svg">
+				<circle cx="21" cy="21" r="21" fill="#E7E7E7" />
+				<path fill-rule="evenodd" clip-rule="evenodd"
+					d="M9 27.9168L20.5 34.5571L32 27.9168V14.6383L20.5 8L9.57529 14.3087C9.35493 14.4355 9.21842 14.6734 9.21842 14.9269C9.21842 15.1804 9.35493 15.4183 9.57529 15.5451L20.0027 21.5652V26.8247L9 20.4731V27.9168ZM20.498 33.4084L9.99262 27.3435V22.1932L14.6831 24.9003L14.6822 24.9018L20.4605 28.2814L26.5235 24.7828V17.7837L20.4624 14.2852L14.9223 17.4835L10.4899 14.925L20.5 9.14669L31.0035 15.2136V27.3435L20.498 33.4084ZM15.9158 18.057L20.5 20.7032L25.0463 18.0774L20.4624 15.4319L15.9158 18.057ZM25.5309 18.9448L20.9973 21.5633V26.8253L25.5309 24.2095V18.9448Z"
+					fill="#002E42" />
+			</svg>
+		</div>
+		<div class="nav"></div>
+	</header>
+	<main class="main-section">
+		<div class="container">
+			<div class="row">
+				<div class="form-side">
+					<form>
+						<div class="form-control">
+							<label for="">Title</label>
+							<input type="text">
+						</div>
+						<div class="form-control">
+							<label for="">Description</label>
+							<input type="text" name="" id="">
+						</div>
+						<div class="form-editor">
+							<div id="editor">
+							</div>
+						</div>
+						<div class="button-control">
+							<button type="submit">Start test</button>
+						</div>
+					</form>
+				</div>
+				<div class="info-side">
+					<h3 class="framework">
+						<%= framework %>
+					</h3>
+					<div class="codesnippet">
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="footer"></footer>
+</body>
+<script src="/scripts/src-min-noconflict/ace.js" charset="utf-8"></script>
+<script src="/scripts/src-min-noconflict/ext-language_tools.js"></script>
+<script src="/scripts/script.js"></script>
+
+</html>
