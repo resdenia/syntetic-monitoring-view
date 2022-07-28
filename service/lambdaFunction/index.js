@@ -27,21 +27,24 @@ exports.handler = async (event, context) => {
         const playwrightHar = new PlaywrightHar(page);
         await playwrightHar.start();
 
-        await page.goto('https://logz.io/');
+        // Your code starts here
 
-        await page.setViewportSize({ width: 1850, height: 877 });
+        // Your code ends here
+        // await page.goto('https://logz.io/');
 
-        await page.waitForSelector(
-            '.home > .body_wrapper > .cta_bottom_section',
-        );
-        await page.click('.home > .body_wrapper > .cta_bottom_section');
+        // await page.setViewportSize({ width: 1850, height: 877 });
 
-        await page.waitForSelector(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
-        await page.click(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
+        // await page.waitForSelector(
+        //     '.home > .body_wrapper > .cta_bottom_section',
+        // );
+        // await page.click('.home > .body_wrapper > .cta_bottom_section');
+
+        // await page.waitForSelector(
+        //     '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
+        // );
+        // await page.click(
+        //     '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
+        // );
 
         harData = await playwrightHar.stop();
     } catch (error) {
@@ -53,9 +56,7 @@ exports.handler = async (event, context) => {
     }
     try {
         const parsedData = parseHarFile(harData);
-        console.log(parsedData);
         parsedData.probes[0].requests.forEach((log) => {
-            console.log(log);
             logger.log({ message: log });
         });
     } catch (err) {

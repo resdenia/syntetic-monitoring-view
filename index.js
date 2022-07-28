@@ -1,5 +1,11 @@
 // index.js
 
+// TODO: Add custom code from the user
+// TODO: Install an app(probably we can upload it already)
+// TODO: Upload to S3 bucket
+// TODO: Create AWS Lambda Function(take name of the function)
+// TODO: Attach to lambda function CloudWatch Events
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const shell = require('shelljs');
@@ -10,8 +16,6 @@ const videoRoutes = require('./routes/video');
 const metricsRoutes = require('./routes/metrics');
 const fs = require('fs');
 const AWS = require('aws-sdk');
-
-const storage = new Storage();
 
 const app = express();
 app.use(bodyParser.json());
