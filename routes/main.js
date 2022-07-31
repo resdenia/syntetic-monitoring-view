@@ -6,6 +6,6 @@ const router = express.Router();
 // GET /feed/posts
 
 // POST /feed/post
-router.get('/tests/new', mainController.homepage);
+router.get('/', mainController.homepage);
 
 module.exports = router;

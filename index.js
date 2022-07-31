@@ -12,8 +12,6 @@ const shell = require('shelljs');
 const path = require('path');
 
 const mainRoutes = require('./routes/main');
-const videoRoutes = require('./routes/video');
-const metricsRoutes = require('./routes/metrics');
 const fs = require('fs');
 const AWS = require('aws-sdk');
 
@@ -49,8 +47,6 @@ app.post('/exec', async (req, res) => {
 });
 
 app.use(mainRoutes);
-app.use(videoRoutes);
-app.use('/api/send', metricsRoutes);
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`helloworld: listening on port ${port}`);
