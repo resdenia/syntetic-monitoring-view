@@ -11,7 +11,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "aws-sdk": "^2.1182.0",
+        "@aws-sdk/client-lambda": "^3.137.0",
+        "@aws-sdk/credential-provider-cognito-identity": "^3.137.0",
+        "aws-sdk": "^2.1185.0",
         "dotenv": "^16.0.1",
         "easy-zip": "0.0.4",
         "ejs": "^3.1.8",

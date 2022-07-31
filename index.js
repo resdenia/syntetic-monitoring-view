@@ -12,6 +12,8 @@ const shell = require('shelljs');
 const path = require('path');
 
 const mainRoutes = require('./routes/main');
+const creatorRoutes = require('./routes/creator');
+
 const fs = require('fs');
 
 const app = express();
@@ -30,6 +32,7 @@ app.post('/exec', async (req, res) => {
 });
 
 app.use(mainRoutes);
+app.use(creatorRoutes);
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`helloworld: listening on port ${port}`);
