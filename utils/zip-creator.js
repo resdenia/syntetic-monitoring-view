@@ -1,12 +1,10 @@
-// const EasyZip = require('easy-zip').EasyZip;
-// const zip = require('express-easy-zip');
 const fs = require('fs');
 const shell = require('shelljs');
 const archiver = require('archiver');
 const path = require('path');
+const { NAME_OF_ZIP_FILE } = require('./constants');
 // create a file to stream archive data to.
-const output = fs.createWriteStream(__dirname + '/example.zip');
-const outPath = path.join(__dirname, '..', 'output', 'lambdaFunction.zip');
+const outPath = path.join(__dirname, '..', 'output', NAME_OF_ZIP_FILE);
 const sourceDir = path.join(__dirname, '..', 'service', 'lambdaFunction');
 
 // const sourceDir = __dirname + '/service/lambdaFunction';

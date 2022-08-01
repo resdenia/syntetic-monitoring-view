@@ -11,9 +11,9 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 // editor.setValue(window.atob(params.script));
 
 const initPage = () => {
-    document.querySelector('#generalForm').addEventListener(
-        'submit',
-        async (e) => {
+    document
+        .querySelector('#generalForm')
+        .addEventListener('submit', async (e) => {
             e.preventDefault();
             const { name, description } = e.target;
             console.log(name.value);
@@ -28,9 +28,7 @@ const initPage = () => {
                     description: description.value,
                 }),
             });
-        },
-        { rootFolder: 'easy-zip6' },
-    );
+        });
 };
 
 initPage();

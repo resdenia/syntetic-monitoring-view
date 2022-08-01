@@ -91,3 +91,11 @@ form {
 	bottom: 0;
 	left: 0;
 }
+
+.submission {
+    background: #F7C15C;
+    border: 0px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
