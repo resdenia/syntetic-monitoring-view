@@ -7,6 +7,7 @@ const initPage = () => {
         .querySelector('#generalForm')
         .addEventListener('submit', async (e) => {
             e.preventDefault();
+            document.querySelector('.backdrop').style.display = 'block';
             const { name, description } = e.target;
             console.log(name.value);
 
@@ -20,22 +21,33 @@ const initPage = () => {
                     name: name.value,
                     description: description.value,
                 }),
-            });
+            })
+                .then((res) => {
+                    return res;
+                })
+                .catch((err) => console.log(err));
+            if (response.ok) {
+                document.querySelector('.backdrop').style.display = 'none';
+            }
         });
 
     const allTabs = document.querySelectorAll('.tab-control-item');
     allTabs.forEach((tab) => {
         tab.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.dir(e.target.attributes['istab'].nodeValue);
-            console.dir(e.target.attributes['isactivetab'].nodeValue);
-
             if (!e.target.classList.contains('active')) {
                 document
                     .querySelector('.tab-control-item.active')
                     .classList.remove('active');
                 e.target.classList.add('active');
-                // document.querySelector();
+                document
+                    .querySelector('.tab-body-item.active')
+                    .classList.remove('active');
+                document
+                    .querySelector(
+                        `[isTabBody=${e.target.attributes['istab'].nodeValue}]`,
+                    )
+                    .classList.add('active');
             }
         });
     });

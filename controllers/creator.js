@@ -10,8 +10,11 @@ exports.creator = async (req, res, next) => {
     const { name, description, code } = req.body;
     try {
         const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
-        const res = await updateFile(code);
-        const status = await fileToZip()
+        const data = await updateFile(code)
+            .then((status) => status)
+            .catch((err) => console.log(err));
+
+        const resp = await fileToZip()
             .then((result) => {
                 console.log(result);
                 let uploadData = true;
@@ -23,14 +26,15 @@ exports.creator = async (req, res, next) => {
             })
             .then((res) => {
                 console.log(res);
-                return createLambda(name, description);
+                console.log('status');
+                const uplaoded = createLambda(name, description);
+                return uplaoded;
             })
             .catch((err) => {
                 console.log(err);
             });
-        console.log('status', status);
         res.statusCode = 200;
-        res.send('Successful!');
+        res.send({ message: 'sucessfull', resp, data });
     } catch (err) {
         console.log(err);
         res.status(404).send(err);

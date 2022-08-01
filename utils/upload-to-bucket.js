@@ -30,6 +30,7 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
                 console.log('File successfully uploaded.');
             }
         });
+        console.log('Zip Uploaded');
         return statusError;
     } catch (err) {
         console.log(err);

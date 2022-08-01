@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const { INDEX_SPLIT } = require('./constants');
 
-function readWriteAsync(code, filePath) {
+const readWriteAsync = async (code, filePath) => {
     try {
-        fs.readFile(filePath, 'utf-8', function (err, data) {
+        fs.readFileSync(filePath, 'utf-8', (err, data) => {
             if (err) throw err;
             const fileStarts = data.split('\n').splice(0, INDEX_SPLIT);
 
@@ -15,7 +15,7 @@ function readWriteAsync(code, filePath) {
             const newValue = fileStarts.concat(code.split('\n'));
             const resultToWrite = newValue.concat(fileEnds).join('\n');
 
-            fs.writeFile(filePath, resultToWrite, 'utf-8', function (err) {
+            fs.writeFileSync(filePath, resultToWrite, 'utf-8', function (err) {
                 if (err) throw err;
                 console.log('filelistAsync complete');
             });
@@ -31,7 +31,7 @@ function readWriteAsync(code, filePath) {
             message: err,
         };
     }
-}
+};
 
 exports.updateFile = async (code) => {
     const statusError = {
@@ -49,6 +49,7 @@ exports.updateFile = async (code) => {
     // const filePath = path.join(__dirname, '..', 'mock', 'file-write.js');
     try {
         const fileStatus = await readWriteAsync(code, filePath);
+        console.log('File updated');
         return fileStatus;
     } catch (err) {
         console.log(err);

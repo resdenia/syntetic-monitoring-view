@@ -29,6 +29,7 @@ exports.createLambda = async (functionName, description) => {
             region: process.env.REGION,
         });
         const data = await lambdaClient.send(new CreateFunctionCommand(params));
+        console.log('created Lambda');
         console.log('Success', data); // successful response
     } catch (err) {
         console.log('Error', err); // an error occurred

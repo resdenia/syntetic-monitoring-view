@@ -11,51 +11,6 @@ const logger = require('logzio-nodejs').createLogger({
     host: 'listener.logz.io',
     port: '8071',
     type: 'syntetic-scripting', // OPTIONAL (If none is set, it will be 'nodejs')
-  await page.goto('https://logz.io/');
-
-        await page.setViewportSize({ width: 1850, height: 877 });
-
-        await page.waitForSelector(
-            '.home > .body_wrapper > .cta_bottom_section',
-        );
-        await page.click('.home > .body_wrapper > .cta_bottom_section');
-
-        await page.waitForSelector(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
-        await page.click(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
-  await page.goto('https://logz.io/');
-
-        await page.setViewportSize({ width: 1850, height: 877 });
-
-        await page.waitForSelector(
-            '.home > .body_wrapper > .cta_bottom_section',
-        );
-        await page.click('.home > .body_wrapper > .cta_bottom_section');
-
-        await page.waitForSelector(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
-        await page.click(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
-  await page.goto('https://logz.io/');
-
-        await page.setViewportSize({ width: 1850, height: 877 });
-
-        await page.waitForSelector(
-            '.home > .body_wrapper > .cta_bottom_section',
-        );
-        await page.click('.home > .body_wrapper > .cta_bottom_section');
-
-        await page.waitForSelector(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
-        await page.click(
-            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
-        );
     sendIntervalMs: 1000,
 });
 function sleep(ms) {
@@ -74,6 +29,45 @@ exports.handler = async (event, context) => {
 
         // Your code starts here
 
+
+										        await page.goto('https://logz.io/');
+
+        await page.setViewportSize({ width: 1850, height: 877 });
+
+        await page.waitForSelector(
+            '.home > .body_wrapper > .cta_bottom_section',
+        );
+        await page.click('.home > .body_wrapper > .cta_bottom_section');
+
+        await page.waitForSelector(
+            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
+        );
+        await page.click(
+            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
+        );
+										
+										
+										
+										
+										
+        await page.goto('https://logz.io/');
+
+        await page.setViewportSize({ width: 1850, height: 877 });
+
+        await page.waitForSelector(
+            '.home > .body_wrapper > .cta_bottom_section',
+        );
+        await page.click('.home > .body_wrapper > .cta_bottom_section');
+
+        await page.waitForSelector(
+            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
+        );
+        await page.click(
+            '.navigation-body > .navigation-body-section_ > .navigation-menu > .navigation-item:nth-child(2) > .navigation-link',
+        );
+										
+										
+										
         // Your code ends here
         // await page.goto('https://logz.io/');
 
@@ -101,7 +95,9 @@ exports.handler = async (event, context) => {
     }
     try {
         const parsedData = parseHarFile(harData);
+        console.log(parsedData);
         parsedData.probes[0].requests.forEach((log) => {
+            console.log(log);
             logger.log({ message: log });
         });
     } catch (err) {
@@ -112,4 +108,3 @@ exports.handler = async (event, context) => {
 
     return true;
 };
-// handler();
