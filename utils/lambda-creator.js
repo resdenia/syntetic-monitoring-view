@@ -1,9 +1,9 @@
 // Load the Lambda client.
 const { CreateFunctionCommand } = require('@aws-sdk/client-lambda');
 const { InvokeCommand } = require('@aws-sdk/client-lambda');
-const { LambdaClient } = require('@aws-sdk/client-lambda');
+// const { LambdaClient } = require('@aws-sdk/client-lambda');
 
-// const { lambdaClient } = require('./lambda-client');
+const { lambdaClient } = require('./lambda-client');
 const { NAME_OF_ZIP_FILE, LAMBDA_FUNCTION_NAME } = require('./constants');
 
 // Set the parameters.
@@ -25,12 +25,8 @@ exports.createLambda = async (functionName, description) => {
         },
     };
     try {
-        const lambdaClient = new LambdaClient({
-            region: process.env.REGION,
-        });
-        const data = await lambdaClient.send(new CreateFunctionCommand(params));
         console.log('created Lambda');
-        console.log('Success', data); // successful response
+        return await lambdaClient.send(new CreateFunctionCommand(params));
     } catch (err) {
         console.log('Error', err); // an error occurred
     }

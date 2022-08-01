@@ -18,7 +18,7 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
             Body: fileData,
         };
 
-        await s3bucket.upload(params, function (err, res) {
+        s3bucket.upload(params, function (err, res) {
             console.log('here');
             console.log(params);
             if (err) {
@@ -30,8 +30,6 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
                 console.log('File successfully uploaded.');
             }
         });
-        console.log('Zip Uploaded');
-        return statusError;
     } catch (err) {
         console.log(err);
     }

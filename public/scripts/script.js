@@ -7,7 +7,7 @@ const initPage = () => {
         .querySelector('#generalForm')
         .addEventListener('submit', async (e) => {
             e.preventDefault();
-            document.querySelector('.backdrop').style.display = 'block';
+            document.querySelector('.backtrop').style.display = 'block';
             const { name, description } = e.target;
             console.log(name.value);
 
@@ -27,7 +27,7 @@ const initPage = () => {
                 })
                 .catch((err) => console.log(err));
             if (response.ok) {
-                document.querySelector('.backdrop').style.display = 'none';
+                document.querySelector('.backtrop').style.display = 'none';
             }
         });
 

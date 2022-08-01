@@ -17,24 +17,22 @@ exports.creator = async (req, res, next) => {
         const resp = await fileToZip()
             .then((result) => {
                 console.log(result);
-                let uploadData = true;
-                const readData = fs.readFileSync(fileRoute, 'utf8');
-                if (readData) {
-                    uploadData = uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
-                }
-                return uploadData;
             })
-            .then((res) => {
-                console.log(res);
-                console.log('status');
-                const uplaoded = createLambda(name, description);
-                return uplaoded;
-            })
+            .then((res) => {})
+            .then((resp) => {})
             .catch((err) => {
                 console.log(err);
             });
+        const readData = fs.readFileSync(fileRoute, 'utf8');
+        if (readData) {
+            uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
+        } else {
+            throw Error('Failed to upload data');
+        }
+        createLambda(name, description);
+
         res.statusCode = 200;
-        res.send({ message: 'sucessfull', resp, data });
+        res.send({ message: 'sucessfull' });
     } catch (err) {
         console.log(err);
         res.status(404).send(err);
