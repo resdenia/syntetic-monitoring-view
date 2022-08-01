@@ -1,6 +1,11 @@
 const AWS = require('aws-sdk');
 
 exports.uploadFileOnS3 = (fileName, fileData) => {
+    const statusError = {
+        status: false,
+        error: '',
+        message: '',
+    };
     AWS.config.update({
         accessKeyId: process.env.ACCESS_KEY,
         secretAccessKey: process.env.SECRET_KEY,
@@ -13,7 +18,13 @@ exports.uploadFileOnS3 = (fileName, fileData) => {
         Body: fileData,
     };
     s3bucket.upload(params, function (err, res) {
-        if (err) console.log('Error in uploading file on s3 due to ' + err);
-        else console.log('File successfully uploaded.');
+        if (err) {
+            statusError.status = true;
+            statusError.error = err;
+            statusError.message = 'Failed to upload to s3 Bucket';
+        } else {
+            console.log('File successfully uploaded.');
+        }
     });
+    return statusError;
 };
