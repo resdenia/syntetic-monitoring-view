@@ -28,46 +28,53 @@
 	</header>
 	<main class="main-section">
 		<div class="container">
-			<div class="tab-control">
-				<div class="tab-control-item active" isActiveTab="true">
-					<p>Code Editor</p>
-				</div>
+			<div class="row">
 
-				<div class="ab-control-item" isActiveTab="false">
-					<p>Code Editor</p>
-				</div>
-			</div>
-			<div class="tab">
-				<div class="tab-body-item active" isActive="true">
-					<div class="row">
-						<div class="form-side">
-							<form id="generalForm">
-								<div class="form-control">
-									<label for="">Name of the Lambda</label>
-									<input name="name" id="name" type="text">
-								</div>
-								<div class="form-control">
-									<label for="">Description</label>
-									<input name="description" id="description" type="text" name="" id="">
-								</div>
-								<div class="form-editor">
-									<div id="editor">
-									</div>
-								</div>
-								<div class="button-control">
-									<button class="submission" type="submit">Start test</button>
-								</div>
-							</form>
-						</div>
-						<div class="info-side">
+				<div class="tab-control">
+					<div class="tab-control-item active" isTab="code" isActiveTab="true">
+						<p>Code Editor</p>
+					</div>
 
-						</div>
+					<div class="tab-control-item" isTab="config" isActiveTab="false">
+						<p>Config Editor</p>
 					</div>
 				</div>
-				<div class="tab-body-item" isActive="false">
-					<div class="row">
-						<div class="config-settings">
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="tab">
+					<div class="tab-body-item active" isActive="true">
+						<div class="row">
+							<div class="form-side">
+								<form id="generalForm">
+									<div class="form-control">
+										<label for="">Name of the Lambda</label>
+										<input name="name" id="name" type="text">
+									</div>
+									<div class="form-control">
+										<label for="">Description</label>
+										<input name="description" id="description" type="text" name="" id="">
+									</div>
+									<div class="form-editor">
+										<div id="editor">
+										</div>
+									</div>
+									<div class="button-control">
+										<button class="submission" type="submit">Start test</button>
+									</div>
+								</form>
+							</div>
+							<div class="info-side">
 
+							</div>
+						</div>
+					</div>
+					<div class="tab-body-item" isActive="false">
+						<div class="row">
+							<div class="config-settings">
+
+							</div>
 						</div>
 					</div>
 				</div>
@@ -76,6 +83,9 @@
 	</main>
 	<div class="errorStatus">
 		<p class="errorMessage"></p>
+	</div>
+	<div class="backdrop">
+
 	</div>
 	<footer class="footer"></footer>
 </body>

@@ -2,14 +2,6 @@ var editor = ace.edit('editor');
 editor.setTheme('ace/theme/monokai');
 editor.session.setMode('ace/mode/javascript');
 
-const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-});
-// Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-// console.log(params.script);
-
-// editor.setValue(window.atob(params.script));
-
 const initPage = () => {
     document
         .querySelector('#generalForm')
@@ -30,6 +22,23 @@ const initPage = () => {
                 }),
             });
         });
+
+    const allTabs = document.querySelectorAll('.tab-control-item');
+    allTabs.forEach((tab) => {
+        tab.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.dir(e.target.attributes['istab'].nodeValue);
+            console.dir(e.target.attributes['isactivetab'].nodeValue);
+
+            if (!e.target.classList.contains('active')) {
+                document
+                    .querySelector('.tab-control-item.active')
+                    .classList.remove('active');
+                e.target.classList.add('active');
+                // document.querySelector();
+            }
+        });
+    });
 };
 
 initPage();
