@@ -16,6 +16,9 @@ exports.createLambda = async (functionName, description) => {
         Role: 'IAM_ROLE_ARN', // IAM_ROLE_ARN; e.g., arn:aws:iam::650138640062:role/v3-lambda-tutorial-lambda-role
         Runtime: 'nodejs12.x',
         Description: description,
+        Environment: {
+            TOKEN: process.env.TOKEN,
+        },
     };
     try {
         const data = await lambdaClient.send(new CreateFunctionCommand(params));
