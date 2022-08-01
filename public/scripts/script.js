@@ -17,7 +17,8 @@ const initPage = () => {
             e.preventDefault();
             const { name, description } = e.target;
             console.log(name.value);
-            await fetch('/api/create-lambda', {
+
+            const response = await fetch('/api/create-lambda', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

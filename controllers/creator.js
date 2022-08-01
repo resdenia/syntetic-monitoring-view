@@ -7,24 +7,22 @@ const { NAME_OF_ZIP_FILE } = require('../utils/constants');
 exports.creator = async (req, res, next) => {
     const { name, description, code } = req.body;
     try {
-        const fileRoute = path.join(
-            __dirname,
-            '..',
-            'output',
-            NAME_OF_ZIP_FILE,
-        );
+        const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
         fileToZip()
             .then((result) => {
+                console.log(result);
                 let uploadData = true;
                 const readData = fs.readFileSync(fileRoute, 'utf8');
                 if (readData) {
                     console.log('here');
                     uploadData = uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
                 }
+                console.log('done?');
                 return uploadData;
             })
             .then((res) => {
-                return createLambda(name, description);
+                console.log(res);
+                // return createLambda(name, description);
             })
             .catch((err) => {
                 console.log(err);
