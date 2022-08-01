@@ -18,17 +18,14 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
             Body: fileData,
         };
 
-        s3bucket.upload(params, function (err, res) {
-            console.log('here');
-            console.log(params);
-            if (err) {
-                console.log(err);
-                statusError.status = true;
-                statusError.error = err;
-                statusError.message = 'Failed to upload to s3 Bucket';
-            } else {
-                console.log('File successfully uploaded.');
-            }
+        return new Promise((resolve, reject) => {
+            s3bucket.upload(params, function (err, res) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('done uploaded');
+                }
+            });
         });
     } catch (err) {
         console.log(err);

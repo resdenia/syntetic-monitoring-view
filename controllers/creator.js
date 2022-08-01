@@ -24,12 +24,14 @@ exports.creator = async (req, res, next) => {
                 console.log(err);
             });
         const readData = fs.readFileSync(fileRoute, 'utf8');
+        let result;
         if (readData) {
-            uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
+            result = await uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
         } else {
             throw Error('Failed to upload data');
         }
-        createLambda(name, description);
+        console.log(result);
+        // createLambda(name, description);
 
         res.statusCode = 200;
         res.send({ message: 'sucessfull' });
