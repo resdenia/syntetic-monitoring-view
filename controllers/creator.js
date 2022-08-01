@@ -10,26 +10,27 @@ exports.creator = async (req, res, next) => {
     const { name, description, code } = req.body;
     try {
         const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
-        const res = updateFile(code);
-        console.log(res);
-        // fileToZip()
-        //     .then((result) => {
-        //         console.log(result);
-        //         let uploadData = true;
-        //         const readData = fs.readFileSync(fileRoute, 'utf8');
-        //         if (readData) {
-        //             uploadData = uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
-        //         }
-        //         return uploadData;
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //         // return createLambda(name, description);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-        res.status(200).send('Successful!');
+        const res = await updateFile(code);
+        const status = await fileToZip()
+            .then((result) => {
+                console.log(result);
+                let uploadData = true;
+                const readData = fs.readFileSync(fileRoute, 'utf8');
+                if (readData) {
+                    uploadData = uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
+                }
+                return uploadData;
+            })
+            .then((res) => {
+                console.log(res);
+                return createLambda(name, description);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        console.log('status', status);
+        res.statusCode = 200;
+        res.send('Successful!');
     } catch (err) {
         console.log(err);
         res.status(404).send(err);

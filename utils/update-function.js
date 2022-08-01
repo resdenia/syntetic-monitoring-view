@@ -1,8 +1,6 @@
 const fs = require('fs');
-const readline = require('readline');
 const path = require('path');
 const { INDEX_SPLIT } = require('./constants');
-const { files } = require('jszip');
 
 function readWriteAsync(code, filePath) {
     try {
