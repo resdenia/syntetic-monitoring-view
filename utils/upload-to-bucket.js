@@ -1,8 +1,6 @@
 const AWS = require('aws-sdk');
 
 exports.uploadFileOnS3 = async (fileName, fileData) => {
-    console.log(process.env.BUCKET_NAME);
-    console.log(process.env.ACCESS_KEY);
     try {
         const statusError = {
             status: false,
