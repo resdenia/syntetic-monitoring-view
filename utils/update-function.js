@@ -1,16 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const { INDEX_SPLIT } = require('./constants');
-
+const { startFile, endFile } = require('../helper/index-config');
 const readWriteAsync = async (code, filePath) => {
     try {
         fs.readFileSync(filePath, 'utf-8', (err, data) => {
             if (err) throw err;
-            const fileStarts = data.split('\n').splice(0, INDEX_SPLIT);
+            const fileStarts = startFile.split('\n');
 
-            const fileEnds = data
-                .split('\n')
-                .splice(INDEX_SPLIT, data.split('\n').length - 1);
+            const fileEnds = endFile.split('\n');
 
             const newValue = fileStarts.concat(code.split('\n'));
             const resultToWrite = newValue.concat(fileEnds).join('\n');

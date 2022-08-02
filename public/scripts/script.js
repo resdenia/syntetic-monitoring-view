@@ -11,6 +11,11 @@ const initPage = () => {
             const { name, description } = e.target;
             console.log(name.value);
 
+            // request to modify file
+            // request to zip file
+            // request to upload s3
+            // request create Lambda
+
             const response = await fetch('/api/create-lambda', {
                 method: 'POST',
                 headers: {
