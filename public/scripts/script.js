@@ -25,7 +25,10 @@ const initPage = () => {
                 .then((res) => {
                     return res;
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    console.log(err);
+                    document.querySelector('.backtrop').style.display = 'none';
+                });
             if (response.ok) {
                 document.querySelector('.backtrop').style.display = 'none';
             }
