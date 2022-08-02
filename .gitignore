@@ -1,3 +1,4 @@
 node_modules
 .env
 lambdaFunction.zip
+responseCreationLambda.json
