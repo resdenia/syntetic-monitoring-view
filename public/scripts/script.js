@@ -7,7 +7,7 @@ const initPage = () => {
         .querySelector('#generalForm')
         .addEventListener('submit', async (e) => {
             e.preventDefault();
-            document.querySelector('.backtrop').style.display = 'block';
+            document.querySelector('.backtrop').style.display = 'flex';
             const { name, description } = e.target;
             console.log(name.value);
 
@@ -54,3 +54,9 @@ const initPage = () => {
 };
 
 initPage();
+
+class PageBuilder {
+    constructor() {}
+
+    startTest() {}
+}

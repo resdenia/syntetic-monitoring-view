@@ -2,23 +2,22 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Metrics sender</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700&display=swap"
-		rel="stylesheet">
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/spinner.css">
-
+		rel="stylesheet" />
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/spinner.css" />
 </head>
 
 <body>
 	<header class="header">
-		<div class="logo"><svg width="43" height="43" viewBox="0 0 43 43" fill="none"
-				xmlns="http://www.w3.org/2000/svg">
+		<div class="logo">
+			<svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<circle cx="21" cy="21" r="21" fill="#E7E7E7" />
 				<path fill-rule="evenodd" clip-rule="evenodd"
 					d="M9 27.9168L20.5 34.5571L32 27.9168V14.6383L20.5 8L9.57529 14.3087C9.35493 14.4355 9.21842 14.6734 9.21842 14.9269C9.21842 15.1804 9.35493 15.4183 9.57529 15.5451L20.0027 21.5652V26.8247L9 20.4731V27.9168ZM20.498 33.4084L9.99262 27.3435V22.1932L14.6831 24.9003L14.6822 24.9018L20.4605 28.2814L26.5235 24.7828V17.7837L20.4624 14.2852L14.9223 17.4835L10.4899 14.925L20.5 9.14669L31.0035 15.2136V27.3435L20.498 33.4084ZM15.9158 18.057L20.5 20.7032L25.0463 18.0774L20.4624 15.4319L15.9158 18.057ZM25.5309 18.9448L20.9973 21.5633V26.8253L25.5309 24.2095V18.9448Z"
@@ -30,7 +29,6 @@
 	<main class="main-section">
 		<div class="container">
 			<div class="row">
-
 				<div class="tab-control">
 					<div class="tab-control-item active" isTab="code">
 						<p>Code Editor</p>
@@ -51,30 +49,61 @@
 								<form id="generalForm">
 									<div class="form-control">
 										<label for="">Name of the Lambda</label>
-										<input name="name" id="name" type="text">
+										<input name="name" id="name" type="text" />
 									</div>
 									<div class="form-control">
 										<label for="">Description</label>
-										<input name="description" id="description" type="text" name="" id="">
+										<input name="description" id="description" type="text" name="" id="" />
 									</div>
 									<div class="form-editor">
-										<div id="editor">
-										</div>
+										<div id="editor"></div>
 									</div>
 									<div class="button-control">
-										<button class="submission" type="submit">Start test</button>
+										<button class="submission" type="submit">
+											Start test
+										</button>
 									</div>
 								</form>
 							</div>
-							<div class="info-side">
-
-							</div>
+							<div class="info-side"></div>
 						</div>
 					</div>
 					<div class="tab-body-item" isTabBody="config">
 						<div class="row">
 							<div class="config-settings">
-								<h2>Config for AWS </h2>
+								<h2>Config for AWS</h2>
+								<!-- ACCESS_KEY=
+SECRET_KEY=
+BUCKET_NAME=
+REGION=
+IDENTITY_POOL_ID -->
+								<form action="" class="config-form">
+									<div class="form-control">
+										<label for="">Aws Access Key</label>
+										<input type="text" name="access_key" id="access_key" />
+									</div>
+									<div class="form-control">
+										<label for="">Aws Secret Key</label>
+										<input type="text" name="secret_key" id="secret_key" />
+									</div>
+									<div class="form-control">
+										<label for="">Bucket Name</label>
+										<input type="text" name="bucket_name" id="bucket_name" />
+									</div>
+									<div class="form-control">
+										<label for="">Aws Region</label>
+										<input type="text" name="region" id="region" />
+									</div>
+									<div class="form-control">
+										<label for="">Aws cognito indentity pool ID</label>
+										<input type="text" name="identity_pool_id" id="identity_pool_id" />
+									</div>
+									<div class="button-control">
+										<button class="submission" type="submit">
+											Accept Configs
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

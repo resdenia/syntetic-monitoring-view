@@ -31,8 +31,8 @@ exports.creator = async (req, res, next) => {
             throw Error('Failed to upload data');
         }
         console.log(result);
-        // createLambda(name, description);
-
+        const lambdaResp = await createLambda(name, description);
+        console.log(lambdaResp);
         res.statusCode = 200;
         res.send({ message: 'sucessfull' });
     } catch (err) {
