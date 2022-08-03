@@ -2,6 +2,13 @@ var editor = ace.edit('editor');
 editor.setTheme('ace/theme/monokai');
 editor.session.setMode('ace/mode/javascript');
 
+const notificationFileModify = document.querySelector('.fileCreated');
+const notificationZipCreate = document.querySelector('.fileZip');
+const notificationZipUpload = document.querySelector('.zipUploaded');
+const notificationLambdaCreate = document.querySelector('.functionCreated');
+const inputLambdaName = document.querySelector('#name');
+const inputLambdaDescription = document.querySelector('#description');
+
 const responseModifyFetch = async (code) => {
     return await fetch('/api/modify-file', {
         method: 'POST',
@@ -75,35 +82,67 @@ const initPage = () => {
         .querySelector('.submission-test')
         .addEventListener('click', async (e) => {
             e.preventDefault();
-            const { name, description } = e.target;
-
+            const name = inputLambdaName.value;
+            const description = inputLambdaDescription.value;
+            console.log(name);
+            console.log(description);
+            notificationFileModify.style.display = 'flex';
             const responseModify = await responseModifyFetch(editor.getValue());
             if (!responseModify.error) {
+                notificationZipCreate.style.display = 'flex';
+                notificationFileModify.querySelector(
+                    '.title-h4-white',
+                ).textContent = 'Function Created';
+                notificationFileModify.querySelector('.loading').style.display =
+                    'none';
+                notificationFileModify.querySelector('.loaded').style.display =
+                    'block';
+                // class notification fileCreated
             } else {
-                console.log('modifyfile fail');
-                //display  error can't modify file please check if you  don't have syntax errors
+                notificationFileModify.querySelector('.loading').style.display =
+                    'none';
+                notificationFileModify.querySelector(
+                    '.loaded-fail',
+                ).style.display = 'block';
                 return false;
             }
             const responseToZip = await responseToZipFetch();
 
             if (!responseToZip.error) {
-                console.log('tozip success');
-
-                //display status
+                notificationZipUpload.style.display = 'flex';
+                notificationZipCreate.querySelector(
+                    '.title-h4-white',
+                ).textContent = 'Zip Created';
+                notificationZipCreate.querySelector('.loading').style.display =
+                    'none';
+                notificationZipCreate.querySelector('.loaded').style.display =
+                    'block';
             } else {
-                //display  error can't modify file please check if you  don't have syntax errors
-                console.log('tozip fail');
+                notificationZipCreate.querySelector('.loading').style.display =
+                    'none';
+                notificationZipCreate.querySelector(
+                    'loaded-fail',
+                ).style.display = 'block';
                 return false;
             }
             const responseUploadZip = await responseUploadZipFetch();
 
             if (!responseUploadZip.error) {
-                console.log('uploadZip success');
-
-                // request create Lambda  /api/create-lambda
+                notificationLambdaCreate.style.display = 'flex';
+                notificationZipUpload.querySelector(
+                    '.title-h4-white',
+                ).textContent = 'Zip Uploaded';
+                notificationZipUpload.querySelector('.loading').style.display =
+                    'none';
+                notificationZipUpload.querySelector('.loaded').style.display =
+                    'block';
             } else {
                 console.log('uploadZip fail');
-
+                notificationZipUpload.querySelector('.loading').style.display =
+                    'none';
+                notificationZipUpload.querySelector(
+                    'loaded-fail',
+                ).style.display = 'block';
                 //display  error can't modify file please check if you  don't have syntax errors
                 return false;
             }
@@ -111,11 +150,29 @@ const initPage = () => {
 
             console.log(response);
             if (!response.ok) {
+                notificationLambdaCreate.querySelector(
+                    '.title-h4-white',
+                ).textContent = 'Lambda Created';
+                notificationLambdaCreate.querySelector(
+                    '.loading',
+                ).style.display = 'none';
+                notificationLambdaCreate.querySelector(
+                    '.loaded',
+                ).style.display = 'block';
+                console.log('uploadZip success');
+                //class notification functionCreated
                 console.log('createZip success');
 
                 // document.querySelector('.backtrop').style.display = 'none';
+            } else {
+                notificationLambdaCreate.querySelector(
+                    '.loading',
+                ).style.display = 'none';
+                notificationLambdaCreate.querySelector(
+                    '.loaded-fail',
+                ).style.display = 'block';
+                return false;
             }
-            //display status
         });
 
     const allTabs = document.querySelectorAll('.tab-control-item');

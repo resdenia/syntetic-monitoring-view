@@ -149,8 +149,8 @@
 	display: inline-block;
 	overflow: hidden;
 
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 
 	background: rgba(nan, nan, nan, 0);
 }
@@ -158,10 +158,10 @@
 .ldio-kugicms7vi {
 	position: relative;
 
-	width: 100%;
-	height: 100%;
+	width: 90%;
+	height: 90%;
 
-	transform: translateZ(0) scale(0.5);
+	transform: translateZ(0) scale(0.3);
 	transform-origin: 0 0; /* see note above */
 	backface-visibility: hidden;
 }

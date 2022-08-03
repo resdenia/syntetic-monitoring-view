@@ -195,3 +195,39 @@ button.disabled, button:disabled {
 h3.title-white {
     color: #fff;
 }
+
+.notification-item {
+	display: none;
+    border: 1px solid #af9055;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    padding: 5px 15px;
+	justify-content: space-between;
+	background-color: #283549;
+}
+.title-wrapper {
+    display: flex;
+	align-content: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.status {
+    display: flex;
+}
+
+.title-h4-white{
+	color: #fff;
+	margin: 0px;
+	font-weight: 400;
+	font-size: 14px;
+}
+.loaded {
+    display: none;
+	width: 30px;
+}
+
+.loaded-fail {
+    display: none;
+	width: 30px;
+}
