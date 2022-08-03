@@ -16,6 +16,7 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
             Bucket: process.env.BUCKET_NAME,
             Key: fileName,
             Body: fileData,
+            ContentType: 'application/zip',
         };
 
         return new Promise((resolve, reject) => {
@@ -29,5 +30,6 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
         });
     } catch (err) {
         console.log(err);
+        return err;
     }
 };

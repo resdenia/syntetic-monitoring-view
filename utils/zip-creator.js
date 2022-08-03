@@ -19,9 +19,14 @@ exports.fileToZip = async () => {
                 .on('error', (err) => reject(err))
                 .pipe(stream);
 
-            stream.on('close', () => console.log('done'));
+            stream.on('close', () => console.log('done1'));
             archive.finalize();
-            resolve('done');
+            console.log('done2');
+            archive.on('end', function () {
+                resolve('done3');
+                // console.log('Archive wrote %d bytes', archive.pointer());
+            });
+            // resolve('done1');
         });
     } catch (err) {
         console.log(err);

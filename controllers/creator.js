@@ -7,6 +7,7 @@ const { createLambda } = require('../utils/lambda-creator');
 const { NAME_OF_ZIP_FILE } = require('../utils/constants');
 
 exports.creator = async (req, res, next) => {
+    console.log('1');
     const { name, description, code } = req.body;
     try {
         // const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
@@ -42,6 +43,8 @@ exports.creator = async (req, res, next) => {
 };
 
 exports.modifyFile = async (req, res, next) => {
+    console.log('1');
+
     const { code } = req.body;
 
     try {
@@ -58,6 +61,8 @@ exports.modifyFile = async (req, res, next) => {
 };
 
 exports.createZip = async (req, res, next) => {
+    console.log('2');
+
     try {
         const resp = await fileToZip()
             .then((result) => {
@@ -75,11 +80,13 @@ exports.createZip = async (req, res, next) => {
 };
 
 exports.uploadZipToS3 = async (req, res, next) => {
+    console.log('3');
+
     const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
 
     try {
         console.log(fileRoute);
-        const readData = fs.readFileSync(fileRoute, 'utf8');
+        const readData = fs.readFileSync(fileRoute);
         let result;
         if (readData) {
             result = await uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
@@ -95,6 +102,7 @@ exports.uploadZipToS3 = async (req, res, next) => {
 };
 
 exports.createLambda = async (req, res, next) => {
+    console.log('4');
     const { name, description } = req.body;
 
     try {

@@ -2,6 +2,11 @@ var editor = ace.edit('editor');
 editor.setTheme('ace/theme/monokai');
 editor.session.setMode('ace/mode/javascript');
 
+const settings = {
+    notificationLoaded: '.loaded',
+    notificationFailed: '.loaded-fail',
+};
+
 const notificationFileModify = document.querySelector('.fileCreated');
 const notificationZipCreate = document.querySelector('.fileZip');
 const notificationZipUpload = document.querySelector('.zipUploaded');
@@ -62,9 +67,8 @@ const responseCreateLambdaFetch = async (name, description) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            // code: editor.getValue(),
-            name: name.value,
-            description: description.value,
+            name,
+            description,
         }),
     })
         .then((res) => {
@@ -84,8 +88,7 @@ const initPage = () => {
             e.preventDefault();
             const name = inputLambdaName.value;
             const description = inputLambdaDescription.value;
-            console.log(name);
-            console.log(description);
+
             notificationFileModify.style.display = 'flex';
             const responseModify = await responseModifyFetch(editor.getValue());
             if (!responseModify.error) {
@@ -136,6 +139,34 @@ const initPage = () => {
                     'none';
                 notificationZipUpload.querySelector('.loaded').style.display =
                     'block';
+                const response = await responseCreateLambdaFetch(
+                    name,
+                    description,
+                );
+                if (!response.error) {
+                    notificationLambdaCreate.querySelector(
+                        '.title-h4-white',
+                    ).textContent = 'Lambda Created';
+                    notificationLambdaCreate.querySelector(
+                        '.loading',
+                    ).style.display = 'none';
+                    notificationLambdaCreate.querySelector(
+                        '.loaded',
+                    ).style.display = 'block';
+                    console.log('uploadZip success');
+                    //class notification functionCreated
+                    console.log('createZip success');
+
+                    // document.querySelector('.backtrop').style.display = 'none';
+                } else {
+                    notificationLambdaCreate.querySelector(
+                        '.loading',
+                    ).style.display = 'none';
+                    notificationLambdaCreate.querySelector(
+                        '.loaded-fail',
+                    ).style.display = 'block';
+                    return false;
+                }
             } else {
                 console.log('uploadZip fail');
                 notificationZipUpload.querySelector('.loading').style.display =
@@ -144,33 +175,6 @@ const initPage = () => {
                     'loaded-fail',
                 ).style.display = 'block';
                 //display  error can't modify file please check if you  don't have syntax errors
-                return false;
-            }
-            const response = await responseCreateLambdaFetch(name, description);
-
-            console.log(response);
-            if (!response.ok) {
-                notificationLambdaCreate.querySelector(
-                    '.title-h4-white',
-                ).textContent = 'Lambda Created';
-                notificationLambdaCreate.querySelector(
-                    '.loading',
-                ).style.display = 'none';
-                notificationLambdaCreate.querySelector(
-                    '.loaded',
-                ).style.display = 'block';
-                console.log('uploadZip success');
-                //class notification functionCreated
-                console.log('createZip success');
-
-                // document.querySelector('.backtrop').style.display = 'none';
-            } else {
-                notificationLambdaCreate.querySelector(
-                    '.loading',
-                ).style.display = 'none';
-                notificationLambdaCreate.querySelector(
-                    '.loaded-fail',
-                ).style.display = 'block';
                 return false;
             }
         });
