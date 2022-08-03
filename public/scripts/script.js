@@ -72,10 +72,9 @@ const responseCreateLambdaFetch = async (name, description) => {
 
 const initPage = () => {
     document
-        .querySelector('#generalForm')
-        .addEventListener('submit', async (e) => {
+        .querySelector('.submission-test')
+        .addEventListener('click', async (e) => {
             e.preventDefault();
-            // document.querySelector('.backtrop').style.display = 'flex';
             const { name, description } = e.target;
 
             const responseModify = await responseModifyFetch(editor.getValue());
@@ -146,5 +145,8 @@ initPage();
 class PageBuilder {
     constructor() {}
 
-    startTest() {}
+    startTest = () => {};
+    tabLogic = () => {};
+    errorDisplay = () => {};
+    statusFromAPI = () => {};
 }

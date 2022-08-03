@@ -27,84 +27,93 @@
 		<div class="nav"></div>
 	</header>
 	<main class="main-section">
-		<div class="container">
-			<div class="row">
-				<div class="tab-control">
-					<div class="tab-control-item active" isTab="code">
-						<p>Code Editor</p>
-					</div>
+		<div class="main-wrapper">
 
-					<div class="tab-control-item" isTab="config">
-						<p>Config Editor</p>
+			<div class="container">
+				<div class="row">
+					<div class="tab-control">
+						<div class="tab-control-item active" isTab="code">
+							<p>Code Editor</p>
+						</div>
+
+						<div class="tab-control-item" isTab="config">
+							<p>Config Editor</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="tab">
+						<div class="tab-body-item active" isTabBody="code">
+							<div class="row">
+								<div class="form-side">
+									<form id="generalForm">
+										<div class="form-control">
+											<label for="">Name of the Lambda</label>
+											<input name="name" id="name" type="text" />
+										</div>
+										<div class="form-control">
+											<label for="">Description</label>
+											<input name="description" id="description" type="text" name="" id="" />
+										</div>
+										<div class="form-editor">
+											<div id="editor"></div>
+										</div>
+
+									</form>
+								</div>
+								<div class="info-side"></div>
+							</div>
+						</div>
+						<div class="tab-body-item" isTabBody="config">
+							<div class="row">
+								<div class="config-settings">
+									<h2 class="title-h2-white">Config for AWS</h2>
+									<form action="" class="config-form">
+										<div class="form-control">
+											<label for="">Aws Access Key</label>
+											<input type="text" name="access_key" id="access_key" />
+										</div>
+										<div class="form-control">
+											<label for="">Aws Secret Key</label>
+											<input type="text" name="secret_key" id="secret_key" />
+										</div>
+										<div class="form-control">
+											<label for="">Bucket Name</label>
+											<input type="text" name="bucket_name" id="bucket_name" />
+										</div>
+										<div class="form-control">
+											<label for="">Aws Region</label>
+											<input type="text" name="region" id="region" />
+										</div>
+
+										<div class="button-control">
+											<button class="submission" type="submit">
+												Accept Configs
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
-				<div class="tab">
-					<div class="tab-body-item active" isTabBody="code">
-						<div class="row">
-							<div class="form-side">
-								<form id="generalForm">
-									<div class="form-control">
-										<label for="">Name of the Lambda</label>
-										<input name="name" id="name" type="text" />
-									</div>
-									<div class="form-control">
-										<label for="">Description</label>
-										<input name="description" id="description" type="text" name="" id="" />
-									</div>
-									<div class="form-editor">
-										<div id="editor"></div>
-									</div>
-									<div class="button-control">
-										<button class="submission" type="submit">
-											Start test
-										</button>
-									</div>
-								</form>
-							</div>
-							<div class="info-side"></div>
-						</div>
-					</div>
-					<div class="tab-body-item" isTabBody="config">
-						<div class="row">
-							<div class="config-settings">
-								<h2>Config for AWS</h2>
-								<!-- ACCESS_KEY=
-SECRET_KEY=
-BUCKET_NAME=
-REGION=
-IDENTITY_POOL_ID -->
-								<form action="" class="config-form">
-									<div class="form-control">
-										<label for="">Aws Access Key</label>
-										<input type="text" name="access_key" id="access_key" />
-									</div>
-									<div class="form-control">
-										<label for="">Aws Secret Key</label>
-										<input type="text" name="secret_key" id="secret_key" />
-									</div>
-									<div class="form-control">
-										<label for="">Bucket Name</label>
-										<input type="text" name="bucket_name" id="bucket_name" />
-									</div>
-									<div class="form-control">
-										<label for="">Aws Region</label>
-										<input type="text" name="region" id="region" />
-									</div>
-
-									<div class="button-control">
-										<button class="submission" type="submit">
-											Accept Configs
-										</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
+		<div class="sidebar-wrapper">
+			<div class="start-test">
+				<div class="button-control">
+					<button disabled class="submission submission-test">
+						Start test
+					</button>
+					<button disabled class="submission test-locally">
+						Test local
+					</button>
 				</div>
+			</div>
+			<div class="status">
+				<h3 class="title-white">Flow</h3>
 			</div>
 		</div>
 	</main>

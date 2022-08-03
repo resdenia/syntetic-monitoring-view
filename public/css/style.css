@@ -24,6 +24,9 @@ input {
 	font-family: 'Montserrat', sans-serif;
 
 }
+.title-h2-white{
+	color: #fff;
+}
 .header{
 	display: flex;
 	background-color: #2A3547;
@@ -32,8 +35,11 @@ input {
 }
 
 .main-section{
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
 }
 .form-control {
     position: relative;
@@ -160,4 +166,32 @@ form {
 .config-form{
 	display: flex;
 		width: 100%;
+}
+.main-wrapper {
+    max-width: 600px;
+    width: 100%;
+}
+
+.sidebar-wrapper {
+    max-width: 200px;
+    width: 100%;
+    margin-left: 2%;
+    background: #2a3547;
+    padding: 10px;
+	border-radius: 5px;
+}
+.submission-test {
+    width: 100%;
+    cursor: pointer;
+}
+.test-locally,
+.submission-test {
+    width: 100%;
+    cursor: pointer;
+}
+button.disabled, button:disabled {
+    opacity: .65;
+}
+h3.title-white {
+    color: #fff;
 }
