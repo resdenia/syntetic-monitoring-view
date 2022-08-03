@@ -83,6 +83,17 @@ const responseCreateLambdaFetch = async (name, description) => {
 
 const initPage = () => {
     document
+        .querySelector('.cloudFormation-test')
+        .addEventListener('click', async () => {
+            console.log('jere');
+            await fetch('/api/create-cfn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        });
+    document
         .querySelector('.submission-test')
         .addEventListener('click', async (e) => {
             e.preventDefault();
@@ -124,7 +135,7 @@ const initPage = () => {
                 notificationZipCreate.querySelector('.loading').style.display =
                     'none';
                 notificationZipCreate.querySelector(
-                    'loaded-fail',
+                    '.loaded-fail',
                 ).style.display = 'block';
                 return false;
             }
@@ -172,7 +183,7 @@ const initPage = () => {
                 notificationZipUpload.querySelector('.loading').style.display =
                     'none';
                 notificationZipUpload.querySelector(
-                    'loaded-fail',
+                    '.loaded-fail',
                 ).style.display = 'block';
                 //display  error can't modify file please check if you  don't have syntax errors
                 return false;

@@ -3,24 +3,18 @@ const path = require('path');
 const { startFile, endFile } = require('../helper/index-config');
 const readWriteAsync = async (code, filePath) => {
     try {
-        fs.readFileSync(filePath, 'utf-8', (err, data) => {
-            if (err) throw err;
-            const fileStarts = startFile.split('\n');
+        const fileStarts = startFile.split('\n');
 
-            const fileEnds = endFile.split('\n');
+        const fileEnds = endFile.split('\n');
 
-            const newValue = fileStarts.concat(code.split('\n'));
-            const resultToWrite = newValue.concat(fileEnds).join('\n');
-
-            fs.writeFileSync(filePath, resultToWrite, 'utf-8', function (err) {
-                if (err) throw err;
-                console.log('filelistAsync complete');
+        const newValue = fileStarts.concat(code.split('\n'));
+        const resultToWrite = newValue.concat(fileEnds).join('\n');
+        return new Promise((resolve, reject) => {
+            fs.writeFile(filePath, resultToWrite, 'utf-8', function (err) {
+                if (err) reject(err);
+                resolve({ error: false, message: 'Function created' });
             });
         });
-        return {
-            error: false,
-            message: 'FileUpdated',
-        };
     } catch (err) {
         console.log(err);
         return {

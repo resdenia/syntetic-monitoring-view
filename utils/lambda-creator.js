@@ -1,7 +1,3 @@
-// Load the Lambda client.
-const { CreateFunctionCommand } = require('@aws-sdk/client-lambda');
-const { InvokeCommand } = require('@aws-sdk/client-lambda');
-const { LambdaClient } = require('@aws-sdk/client-lambda');
 const AWS = require('aws-sdk');
 
 const { NAME_OF_ZIP_FILE, LAMBDA_FUNCTION_NAME } = require('./constants');

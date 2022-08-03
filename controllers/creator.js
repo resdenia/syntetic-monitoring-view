@@ -4,6 +4,7 @@ const { uploadFileOnS3 } = require('../utils/upload-to-bucket');
 const { fileToZip } = require('../utils/zip-creator');
 const { updateFile } = require('../utils/update-function');
 const { createLambda } = require('../utils/lambda-creator');
+const { createCloudFormation } = require('../utils/cloudformation-creator');
 const { NAME_OF_ZIP_FILE } = require('../utils/constants');
 
 exports.creator = async (req, res, next) => {
@@ -110,6 +111,20 @@ exports.createLambda = async (req, res, next) => {
         console.log(lambdaResp);
         res.statusCode = 200;
         res.send({ error: false, message: 'Lambda was created' });
+    } catch (err) {
+        console.log(err);
+        res.status(400).send({ error: true, err });
+    }
+};
+
+exports.createCfn = async (req, res, next) => {
+    try {
+        const resp = await createCloudFormation();
+
+        if (resp) {
+            res.statusCode = 200;
+            res.send({ error: false, message: 'Lambda was created' });
+        }
     } catch (err) {
         console.log(err);
         res.status(400).send({ error: true, err });
