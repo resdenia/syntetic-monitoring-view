@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-
+const { convertHarToJSON } = require('./convertHarToJSON');
 const playwright = require('playwright-aws-lambda');
 const { PlaywrightHar } = require('playwright-har');
 const parseHarFile = require('./parseHar');
@@ -27,10 +27,7 @@ exports.handler = async (event, context) => {
         const playwrightHar = new PlaywrightHar(page);
         await playwrightHar.start();
 
-        // Your code starts here
-
-        // Your code ends here
-
+        console.log('updatred');
         harData = await playwrightHar.stop();
     } catch (error) {
         throw error;
@@ -40,9 +37,14 @@ exports.handler = async (event, context) => {
         }
     }
     try {
-        const parsedData = parseHarFile(harData);
-        parsedData.probes[0].requests.forEach((log) => {
-            logger.log({ message: log });
+        // const parsedData = parseHarFile(harData);
+
+        // parsedData.probes[0].requests.forEach((log) => {
+        //     logger.log({ message: log });
+        // });
+        const parsedData = convertHarToJSON(harData);
+        parsedData.forEach((log) => {
+            logger.log(log);
         });
     } catch (err) {
         console.log(err);

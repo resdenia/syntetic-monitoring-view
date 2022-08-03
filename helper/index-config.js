@@ -2,7 +2,8 @@ module.exports = {
     startFile: `require('dotenv').config();
 	const fs = require('fs');
 	const path = require('path');
-	
+	const { convertHarToJSON } = require('./convertHarToJSON');
+
 	const playwright = require('playwright-aws-lambda');
 	const { PlaywrightHar } = require('playwright-har');
 	const parseHarFile = require('./parseHar');
@@ -37,9 +38,14 @@ module.exports = {
 	}
 }
 try {
-	const parsedData = parseHarFile(harData);
-	parsedData.probes[0].requests.forEach((log) => {
-		logger.log({ message: log });
+	// const parsedData = parseHarFile(harData);
+
+	// parsedData.probes[0].requests.forEach((log) => {
+	//     logger.log({ message: log });
+	// });
+	const parsedData = convertHarToJSON(harData);
+	parsedData.forEach((log) => {
+		logger.log(log);
 	});
 } catch (err) {
 	console.log(err);
