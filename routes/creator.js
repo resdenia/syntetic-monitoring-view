@@ -12,6 +12,6 @@ router.post('/api/create-zip', creatorController.createZip);
 // uploadZipToS3
 router.post('/api/uploadZip', creatorController.uploadZipToS3);
 
-router.post('/api/create-lambda', creatorController.creator);
+router.post('/api/create-lambda', creatorController.createLambda);
 
 module.exports = router;
