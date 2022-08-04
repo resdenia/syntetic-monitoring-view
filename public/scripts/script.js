@@ -1,5 +1,17 @@
 var editor = ace.edit('editor');
 editor.setTheme('ace/theme/monokai');
+editor.session.on('changeMode', function (e, session) {
+    if ('ace/mode/javascript' === session.getMode().$id) {
+        if (!!session.$worker) {
+            session.$worker.send('setOptions', [
+                {
+                    esversion: 9,
+                    esnext: false,
+                },
+            ]);
+        }
+    }
+});
 editor.session.setMode('ace/mode/javascript');
 
 const settings = {
@@ -25,14 +37,19 @@ class PageBuilder {
         this.createNewOne = null;
     }
     customFetch = async (bodyToSend, url) => {
-        return await fetch(url, {
+        return await fetch(`http://localhost:8080${url}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(bodyToSend),
+            ...(Object.keys(bodyToSend).length > 0
+                ? { body: JSON.stringify(bodyToSend) }
+                : {}),
         })
-            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                return res.json();
+            })
             .catch((err) => {
                 console.log(err);
                 //display error
@@ -41,7 +58,7 @@ class PageBuilder {
     };
     startTest = () => {};
     tabLogic = () => {};
-    errorDisplay = () => {};
+    errorDisplay = (errorMessage) => {};
     statusFromAPI = () => {};
     cloudFormationGenerator = () => {
         document
@@ -67,7 +84,8 @@ class PageBuilder {
         notification.querySelector('.loading').style.display = 'none';
         notification.querySelector('.loaded-fail').style.display = 'block';
     };
-    initPage = () => {
+    initPage = async () => {
+        const self = this;
         document
             .querySelector('.submission-test')
             .addEventListener('click', async (e) => {
@@ -82,38 +100,38 @@ class PageBuilder {
                 );
 
                 if (!responseModify.error) {
-                    this.displayGoodStatus(
+                    self.displayGoodStatus(
                         notificationFileModify,
                         notificationZipCreate,
                         'Function Created',
                     );
                 } else {
-                    this.displayFailedStatus(notificationFileModify);
+                    self.displayFailedStatus(notificationFileModify);
                     return false;
                 }
                 const responseToZip = await this.customFetch(
-                    {},
+                    { message: 'success' },
                     '/api/create-zip',
                 );
 
                 if (!responseToZip.error) {
-                    this.displayGoodStatus(
+                    self.displayGoodStatus(
                         notificationZipCreate,
                         notificationZipUpload,
                         'Zip Created',
                     );
                 } else {
-                    this.displayFailedStatus(notificationZipCreate);
+                    self.displayFailedStatus(notificationZipCreate);
                     return false;
                 }
 
-                const responseUploadZip = await responseUploadZipFetch(
+                const responseUploadZip = await this.customFetch(
                     {},
                     '/api/uploadZip',
                 );
 
                 if (!responseUploadZip.error) {
-                    this.displayGoodStatus(
+                    self.displayGoodStatus(
                         notificationZipUpload,
                         notificationLambdaCreate,
                         'Zip Uploaded',
@@ -124,17 +142,17 @@ class PageBuilder {
                     );
 
                     if (!response.error) {
-                        this.displayGoodStatus(
+                        self.displayGoodStatus(
                             notificationLambdaCreate,
                             null,
                             'Lambda Created',
                         );
                     } else {
-                        this.displayFailedStatus(notificationLambdaCreate);
+                        self.displayFailedStatus(notificationLambdaCreate);
                         return false;
                     }
                 } else {
-                    this.displayFailedStatus(notificationZipUpload);
+                    self.displayFailedStatus(notificationZipUpload);
                     return false;
                 }
             });
@@ -161,6 +179,7 @@ class PageBuilder {
         });
     };
 }
-const pageBuilder = new PageBuilder();
 
+const pageBuilder = new PageBuilder();
 pageBuilder.initPage();
+pageBuilder.cloudFormationGenerator();

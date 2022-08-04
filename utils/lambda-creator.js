@@ -17,6 +17,7 @@ exports.createLambda = async (functionName, description) => {
         Runtime: 'nodejs16.x',
         Description: description,
         MemorySize: 512,
+        Timeout: 80,
         Environment: {
             Variables: {
                 TOKEN: process.env.TOKEN,

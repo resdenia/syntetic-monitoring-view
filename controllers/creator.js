@@ -68,10 +68,13 @@ exports.createZip = async (req, res, next) => {
         const resp = await fileToZip()
             .then((result) => {
                 console.log(result);
+                return result;
             })
             .catch((err) => {
                 console.log(err);
+                return result;
             });
+        console.log(resp);
         res.statusCode = 201;
         res.send({ error: false, message: 'Zip Created' });
     } catch (err) {

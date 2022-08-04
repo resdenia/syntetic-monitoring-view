@@ -8,11 +8,13 @@ Resources:
     Properties:
       Runtime: nodejs14.x
       CodeUri:
-        Bucket: ${process.env.BUCKET_NAME}
-        Key: ${NAME_OF_ZIP_FILE}
+        Bucket: /some_url
+        Key: some_zip
       Handler: index.handler
       Description: Run twice a day - once on a cron schedule and once on a rate schedule
-      FunctionName: ${LAMBDA_FUNCTION_NAME}
+      FunctionName: some_lambda_name
+      MemorySize: 512
+      Timeout: 60
       Events:
         CronEvent:
           Type: Schedule
@@ -22,4 +24,4 @@ Resources:
             Description: Trigger Lambda at 1:15 PM daily
       Environment:
         Variables:
-          TOKEN: ${process.env.TOKEN}
+          TOKEN: some_token

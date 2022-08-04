@@ -16,17 +16,14 @@ exports.fileToZip = async () => {
         return new Promise((resolve, reject) => {
             archive
                 .directory(sourceDir, false)
-                .on('error', (err) => reject(err))
+                .on('error', (err) => {
+                    console.log(err);
+                    reject(err);
+                })
                 .pipe(stream);
 
-            stream.on('close', () => console.log('done1'));
+            stream.on('close', () => resolve('done3'));
             archive.finalize();
-            console.log('done2');
-            archive.on('end', function () {
-                resolve('done3');
-                // console.log('Archive wrote %d bytes', archive.pointer());
-            });
-            // resolve('done1');
         });
     } catch (err) {
         console.log(err);

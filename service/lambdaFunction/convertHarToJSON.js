@@ -28,7 +28,7 @@ const entryPattern = {
     time: /^(?<time>\-?(\d+\.?\d*|\d*\.?\d+))$/,
 };
 
-export const convertHarToJSON = (harFile) => {
+const convertHarToJSON = (harFile) => {
     let flatEntries = [];
     try {
         harFile.log.entries.forEach((entry, entryIndex) => {
@@ -53,3 +53,5 @@ export const convertHarToJSON = (harFile) => {
         return { error: true, message: 'Failed to convert Har file' };
     }
 };
+
+module.exports = convertHarToJSON;

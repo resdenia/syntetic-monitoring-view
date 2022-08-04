@@ -16,6 +16,8 @@ Resources:
       Handler: index.handler
       Description: Run twice a day - once on a cron schedule and once on a rate schedule
       FunctionName: ${LAMBDA_FUNCTION_NAME}
+      MemorySize: 512
+      Timeout: 60
       Events:
         CronEvent:
           Type: Schedule
@@ -28,7 +30,6 @@ Resources:
           TOKEN: ${process.env.TOKEN}`;
 
 exports.createCloudFormation = async (functionName, description) => {
-    console.log('here');
     try {
         AWS.config.update({
             accessKeyId: process.env.ACCESS_KEY,
@@ -39,16 +40,17 @@ exports.createCloudFormation = async (functionName, description) => {
         });
         params = {
             StackName: 'syntetic-flow',
-
-            Capabilities: [`CAPABILITY_AUTO_EXPAND`],
-
+            Capabilities: ['CAPABILITY_AUTO_EXPAND', 'CAPABILITY_IAM'],
+            OnFailure: 'DO_NOTHING',
             TemplateBody: TEMPLATE_BODY,
         };
 
         return new Promise((resolve, reject) => {
             cloudformation.createStack(params, function (err, data) {
-                if (err) reject(err); // an error occurred
-                else resolve(data); // successful response
+                if (err) {
+                    console.log(err);
+                    reject(err); // an error occurred
+                } else resolve(data); // successful response
             });
         });
     } catch (err) {
