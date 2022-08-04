@@ -44,15 +44,12 @@ exports.creator = async (req, res, next) => {
 };
 
 exports.modifyFile = async (req, res, next) => {
-    console.log('1');
-
     const { code } = req.body;
 
     try {
         const data = await updateFile(code)
             .then((status) => status)
             .catch((err) => console.log(err));
-        console.log(data);
         res.statusCode = 201;
         res.send({ error: false, message: 'File modified' });
     } catch (err) {
@@ -62,19 +59,15 @@ exports.modifyFile = async (req, res, next) => {
 };
 
 exports.createZip = async (req, res, next) => {
-    console.log('2');
-
     try {
         const resp = await fileToZip()
             .then((result) => {
-                console.log(result);
                 return result;
             })
             .catch((err) => {
                 console.log(err);
                 return result;
             });
-        console.log(resp);
         res.statusCode = 201;
         res.send({ error: false, message: 'Zip Created' });
     } catch (err) {
@@ -84,8 +77,6 @@ exports.createZip = async (req, res, next) => {
 };
 
 exports.uploadZipToS3 = async (req, res, next) => {
-    console.log('3');
-
     const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
 
     try {
@@ -106,7 +97,6 @@ exports.uploadZipToS3 = async (req, res, next) => {
 };
 
 exports.createLambda = async (req, res, next) => {
-    console.log('4');
     const { name, description } = req.body;
 
     try {
