@@ -27,7 +27,10 @@ const notificationZipUpload = document.querySelector('.zipUploaded');
 const notificationLambdaCreate = document.querySelector('.functionCreated');
 const inputLambdaName = document.querySelector('#name');
 const inputLambdaDescription = document.querySelector('#description');
-
+const allTabs = document.querySelectorAll('.tab-control-item');
+const configForm = document.querySelector('.config-form');
+const allConfigInputs = document.querySelectorAll('.config-form input');
+const startTestButton = document.querySelector('.submission-test');
 class PageBuilder {
     constructor() {
         this.awsAccessKey = null;
@@ -57,7 +60,27 @@ class PageBuilder {
             });
     };
     startTest = () => {};
-    tabLogic = () => {};
+    tabLogic = () => {
+        allTabs.forEach((tab) => {
+            tab.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!e.target.classList.contains('active')) {
+                    document
+                        .querySelector('.tab-control-item.active')
+                        .classList.remove('active');
+                    e.target.classList.add('active');
+                    document
+                        .querySelector('.tab-body-item.active')
+                        .classList.remove('active');
+                    document
+                        .querySelector(
+                            `[isTabBody=${e.target.attributes['istab'].nodeValue}]`,
+                        )
+                        .classList.add('active');
+                }
+            });
+        });
+    };
     errorDisplay = (errorMessage) => {
         const errorContainer = document.querySelector('.errorStatus');
         const errorText = document.querySelector('.errorMessage');
@@ -134,7 +157,6 @@ class PageBuilder {
                     );
                 } else {
                     this.errorDisplay(responseToZip.error);
-
                     self.displayFailedStatus(notificationZipCreate);
                     return false;
                 }
@@ -163,41 +185,53 @@ class PageBuilder {
                         );
                     } else {
                         this.errorDisplay(responseUploadZip.error);
-
                         self.displayFailedStatus(notificationLambdaCreate);
                         return false;
                     }
                 } else {
                     this.errorDisplay(response.error);
-
                     self.displayFailedStatus(notificationZipUpload);
                     return false;
                 }
             });
-
-        const allTabs = document.querySelectorAll('.tab-control-item');
-        allTabs.forEach((tab) => {
-            tab.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (!e.target.classList.contains('active')) {
-                    document
-                        .querySelector('.tab-control-item.active')
-                        .classList.remove('active');
-                    e.target.classList.add('active');
-                    document
-                        .querySelector('.tab-body-item.active')
-                        .classList.remove('active');
-                    document
-                        .querySelector(
-                            `[isTabBody=${e.target.attributes['istab'].nodeValue}]`,
-                        )
-                        .classList.add('active');
+    };
+    disableButtonConfig = () => {
+        allConfigInputs.forEach((input) => {
+            input.addEventListener('input', (e) => {
+                if (startTestButton.disabled === false) {
+                    startTestButton.disabled = true;
                 }
             });
         });
     };
+    configFormHandle = () => {
+        configForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const { access_key, secret_key, bucket_name, region } = e.target;
+
+            if (
+                access_key.value === '' ||
+                secret_key.value === '' ||
+                bucket_name.value === '' ||
+                region.value === ''
+            ) {
+                startTestButton.disabled = true;
+            } else {
+                this.awsAccessKey = access_key.value;
+                this.awsBucketName = bucket_name.value;
+                this.awsSecretKey = secret_key.value;
+                this.region = region.value;
+                startTestButton.disabled = false;
+            }
+        });
+    };
+    init = () => {
+        this.initPage();
+        this.cloudFormationGenerator();
+        this.tabLogic();
+        this.configFormHandle();
+    };
 }
 
 const pageBuilder = new PageBuilder();
-pageBuilder.initPage();
-pageBuilder.cloudFormationGenerator();
+pageBuilder.init();
