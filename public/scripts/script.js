@@ -1,4 +1,4 @@
-var editor = ace.edit('editor');
+const editor = ace.edit('editor');
 editor.setTheme('ace/theme/monokai');
 editor.session.on('changeMode', function (e, session) {
     if ('ace/mode/javascript' === session.getMode().$id) {
@@ -58,7 +58,18 @@ class PageBuilder {
     };
     startTest = () => {};
     tabLogic = () => {};
-    errorDisplay = (errorMessage) => {};
+    errorDisplay = (errorMessage) => {
+        const errorContainer = document.querySelector('.errorStatus');
+        const errorText = document.querySelector('.errorMessage');
+        errorContainer.style.display = 'block';
+        errorContainer.style.bottom = '10px';
+        errorText.textContent = errorMessage;
+        setTimeout(() => {
+            errorContainer.style.bottom = '-20px';
+            errorContainer.style.display = 'none';
+            errorText.textContent = '';
+        }, 10000);
+    };
     statusFromAPI = () => {};
     cloudFormationGenerator = () => {
         document
@@ -106,6 +117,7 @@ class PageBuilder {
                         'Function Created',
                     );
                 } else {
+                    this.errorDisplay(responseModify.error);
                     self.displayFailedStatus(notificationFileModify);
                     return false;
                 }
@@ -121,6 +133,8 @@ class PageBuilder {
                         'Zip Created',
                     );
                 } else {
+                    this.errorDisplay(responseToZip.error);
+
                     self.displayFailedStatus(notificationZipCreate);
                     return false;
                 }
@@ -148,10 +162,14 @@ class PageBuilder {
                             'Lambda Created',
                         );
                     } else {
+                        this.errorDisplay(responseUploadZip.error);
+
                         self.displayFailedStatus(notificationLambdaCreate);
                         return false;
                     }
                 } else {
+                    this.errorDisplay(response.error);
+
                     self.displayFailedStatus(notificationZipUpload);
                     return false;
                 }
