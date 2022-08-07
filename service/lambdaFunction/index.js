@@ -28,7 +28,23 @@ require('dotenv').config();
 			const playwrightHar = new PlaywrightHar(page);
 			await playwrightHar.start();
 	
-console.log('sssd')
+await page.goto('https://logz.io/');
+
+    await page.setViewport({ width: 1680, height: 877 });
+
+    await page.waitForSelector(
+        '.container > .row > .hero_section__content_row > .hero_section__header > .hero_section__title',
+    );
+    await page.click(
+        '.container > .row > .hero_section__content_row > .hero_section__header > .hero_section__title',
+    );
+
+    await page.waitForSelector(
+        '.container > .row > .hero_section__content_row > .hero_section__header > .hero_section__title',
+    );
+    await page.click(
+        '.container > .row > .hero_section__content_row > .hero_section__header > .hero_section__title',
+    );
       harData = await playwrightHar.stop();
 } catch (error) {
 	throw error;

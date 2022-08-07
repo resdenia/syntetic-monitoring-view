@@ -193,6 +193,22 @@ class PageBuilder {
                     self.displayFailedStatus(notificationZipUpload);
                     return false;
                 }
+                const cloudBridgeEventResp = await this.customFetch(
+                    { name },
+                    '/api/create-cfn',
+                );
+                if (!cloudBridgeEventResp.error) {
+                    // self.displayGoodStatus(
+                    // 	notificationLambdaCreate,
+                    // 	null,
+                    // 	'Lambda Created',
+                    // );
+                    console.log('cloudAdded');
+                } else {
+                    this.errorDisplay(responseUploadZip.error);
+                    self.displayFailedStatus(notificationLambdaCreate);
+                    return false;
+                }
             });
     };
     disableButtonConfig = () => {

@@ -112,8 +112,10 @@ exports.createLambda = async (req, res, next) => {
 };
 
 exports.createCfn = async (req, res, next) => {
+    const { name } = req.body;
+
     try {
-        const resp = await cloudWatchEvent();
+        const resp = await cloudWatchEvent(name);
 
         if (resp) {
             res.statusCode = 200;

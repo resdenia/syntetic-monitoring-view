@@ -6,12 +6,12 @@ const {
 const { cweClient } = require('./cloudWatchEventsClient.js');
 const { CLOUDWATCH_EVENT, LAMBDA_FUNCTION_NAME } = require('./constants');
 
-exports.cloudWatchEvent = async () => {
+exports.cloudWatchEvent = async (name) => {
     const paramsTarget = {
         Rule: CLOUDWATCH_EVENT,
         Targets: [
             {
-                Arn: LAMBDA_FUNCTION_NAME, //LAMBDA_FUNCTION_ARN
+                Arn: name || LAMBDA_FUNCTION_NAME, //LAMBDA_FUNCTION_ARN
                 Id: 'myCloudWatchEventsTarget',
             },
         ],
