@@ -5,6 +5,7 @@ const { fileToZip } = require('../utils/zip-creator');
 const { updateFile } = require('../utils/update-function');
 const { createLambda } = require('../utils/lambda-creator');
 const { createCloudFormation } = require('../utils/cloudformation-creator');
+const { cloudWatchEvent } = require('../utils/cloudWatchEvent');
 const { NAME_OF_ZIP_FILE } = require('../utils/constants');
 
 exports.creator = async (req, res, next) => {
@@ -112,7 +113,7 @@ exports.createLambda = async (req, res, next) => {
 
 exports.createCfn = async (req, res, next) => {
     try {
-        const resp = await createCloudFormation();
+        const resp = await cloudWatchEvent();
 
         if (resp) {
             res.statusCode = 200;

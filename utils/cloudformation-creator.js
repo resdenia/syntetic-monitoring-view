@@ -22,9 +22,9 @@ Resources:
         CronEvent:
           Type: Schedule
           Properties:
-            Schedule: cron(15 13 * * ? *)
-            Name: CronSchedule
-            Description: Trigger Lambda at 1:15 PM daily
+            Schedule: rate(1 minute)
+            Name: RateSchedule
+            Description: Trigger Lambda once in a minute
       Environment:
         Variables:
           TOKEN: ${process.env.TOKEN}`;
@@ -40,12 +40,17 @@ exports.createCloudFormation = async (functionName, description) => {
         });
         params = {
             StackName: 'syntetic-flow',
-            Capabilities: ['CAPABILITY_AUTO_EXPAND', 'CAPABILITY_IAM'],
-            OnFailure: 'DO_NOTHING',
+            Capabilities: [
+                'CAPABILITY_AUTO_EXPAND',
+                'CAPABILITY_IAM',
+                'CAPABILITY_NAMED_IAM',
+            ],
+            // OnFailure: 'DO_NOTHING',
             TemplateBody: TEMPLATE_BODY,
         };
 
         return new Promise((resolve, reject) => {
+            console.log('sss');
             cloudformation.createStack(params, function (err, data) {
                 if (err) {
                     console.log(err);

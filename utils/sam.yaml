@@ -3,13 +3,28 @@ Transform: 'AWS::Serverless-2016-10-31'
 Description: "This is an AWS Lambda function that collects CloudWatch logs and sends them to Logz.io in bulk, over HTTP."
 
 Resources:
+  lambdaIamRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: SynteticScripting
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
   ScheduledLambda:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs14.x
+      Runtime: nodejs16.x
       CodeUri:
         Bucket: /some_url
         Key: some_zip
+      Role: !GetAtt lambdaIamRole.Arn
       Handler: index.handler
       Description: Run twice a day - once on a cron schedule and once on a rate schedule
       FunctionName: some_lambda_name
