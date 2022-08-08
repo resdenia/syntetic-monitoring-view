@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { startFile, endFile } = require('../helper/index-config');
+const { startFileLocally, endFileLocally } = require('../helper/index-config');
 const readWriteAsync = async (code, filePath) => {
     try {
-        const fileStarts = startFile.split('\n');
+        const fileStarts = startFileLocally.split('\n');
 
-        const fileEnds = endFile.split('\n');
+        const fileEnds = endFileLocally.split('\n');
 
         const newValue = fileStarts.concat(code.split('\n'));
         const resultToWrite = newValue.concat(fileEnds).join('\n');
@@ -24,7 +24,7 @@ const readWriteAsync = async (code, filePath) => {
     }
 };
 
-exports.updateFile = async (code) => {
+exports.updateFileLocal = async (code) => {
     const statusError = {
         error: false,
         message: '',
@@ -33,7 +33,7 @@ exports.updateFile = async (code) => {
         __dirname,
         '..',
         'service',
-        'lambdaFunction',
+        'lambdaFunctionLocal',
         'index.js',
     );
     // Test

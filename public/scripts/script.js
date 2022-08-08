@@ -258,6 +258,7 @@ class PageBuilder {
     init = () => {
         this.initPage();
         this.tabLogic();
+        this.testLocal();
         this.configFormHandle();
     };
     validInput = () => {};
@@ -265,10 +266,16 @@ class PageBuilder {
         document
             .querySelector('.test-locally')
             .addEventListener('click', async (e) => {
+                document.querySelector('.link-har').classList.add('hidden');
                 const responseModify = await this.customFetch(
                     { code: editor.getValue() },
                     settings.endPointUrls.modifyFileLocalUrl,
                 );
+                if (!responseModify.error) {
+                    document
+                        .querySelector('.link-har')
+                        .classList.remove('hidden');
+                }
             });
     };
 }

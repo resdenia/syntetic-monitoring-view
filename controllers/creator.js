@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const shell = require('shelljs');
+
 const { uploadFileOnS3 } = require('../utils/upload-to-bucket');
 const { fileToZip } = require('../utils/zip-creator');
 const { updateFile } = require('../utils/update-function');
+const { updateFileLocal } = require('../utils/update-function-local');
 const { createLambda } = require('../utils/lambda-creator');
 const { cloudWatchEvent } = require('../utils/cloudWatchEvent');
 const { NAME_OF_ZIP_FILE } = require('../utils/constants');
@@ -106,7 +109,15 @@ exports.addEventBridge = async (req, res, next) => {
 
 exports.modifyFileLocally = async (req, res, next) => {
     const { code } = req.body;
+
     try {
+        const resp = await updateFileLocal(code);
+        if (resp) {
+            res.statusCode = 200;
+            shell.exec('node ./service/lambdaFunctionLocal/index.js');
+
+            res.send({ error: false, message: 'File was created' });
+        }
     } catch (err) {
         console.log(err);
         res.status(400).send({ error: true, err });

@@ -3,3 +3,4 @@ node_modules
 lambdaFunction.zip
 responseCreationLambda.json
 archive_cloudformation-creator.js
+local.har
