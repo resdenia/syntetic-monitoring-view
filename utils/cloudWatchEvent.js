@@ -9,8 +9,6 @@ const { addPermissions } = require('./addPermissions');
 const { CLOUDWATCH_EVENT } = require('./constants');
 
 exports.cloudWatchEvent = async (name, range_time) => {
-    console.log('function name!!=>', name);
-
     const paramsTarget = {
         Rule: CLOUDWATCH_EVENT,
         Targets: [
@@ -23,7 +21,9 @@ exports.cloudWatchEvent = async (name, range_time) => {
     const paramsRule = {
         Name: CLOUDWATCH_EVENT,
         RoleArn: process.env.IAM_ROLE_ARN_EVENT, //IAM_ROLE_ARN
-        ScheduleExpression: `rate(${range_time} minutes)`,
+        ScheduleExpression: `rate(${range_time} minute${
+            parseInt(range_time) === 1 ? '' : 's'
+        })`,
         State: 'ENABLED',
     };
 

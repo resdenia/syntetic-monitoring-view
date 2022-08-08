@@ -49,9 +49,10 @@ class PageBuilder {
         this.awsAccessKey = null;
         this.awsSecretKey = null;
         this.awsBucketName = null;
+        this.shipping_token = null;
         this.awsRegion = null;
         this.createNewOne = null;
-        this.range_time = null;
+        this.range_time = 1;
     }
     customFetch = async (bodyToSend, url) => {
         return await fetch(`http://localhost:8080${url}`, {
@@ -133,10 +134,10 @@ class PageBuilder {
                 notificationFileModify.style.display = 'flex';
                 const responseModify = await this.customFetch(
                     { code: editor.getValue() },
-                    endPointUrls.modifyFileUrl,
+                    settings.endPointUrls.modifyFileUrl,
                 );
 
-                if (responseModify.ok) {
+                if (!responseModify.error) {
                     self.displayGoodStatus(
                         notificationFileModify,
                         notificationZipCreate,
@@ -149,10 +150,10 @@ class PageBuilder {
                 }
                 const responseToZip = await this.customFetch(
                     { message: 'success' },
-                    endPointUrls.createZipUrl,
+                    settings.endPointUrls.createZipUrl,
                 );
 
-                if (responseToZip.ok) {
+                if (!responseToZip.error) {
                     self.displayGoodStatus(
                         notificationZipCreate,
                         notificationZipUpload,
@@ -166,10 +167,10 @@ class PageBuilder {
 
                 const responseUploadZip = await this.customFetch(
                     {},
-                    endPointUrls.uploadZipUrl,
+                    settings.endPointUrls.uploadZipUrl,
                 );
 
-                if (responseUploadZip.ok) {
+                if (!responseUploadZip.error) {
                     self.displayGoodStatus(
                         notificationZipUpload,
                         notificationLambdaCreate,
@@ -177,10 +178,10 @@ class PageBuilder {
                     );
                     const response = await this.customFetch(
                         { name, description },
-                        endPointUrls.createLambdaUrl,
+                        settings.endPointUrls.createLambdaUrl,
                     );
 
-                    if (response.ok) {
+                    if (!response.error) {
                         self.displayGoodStatus(
                             notificationLambdaCreate,
                             null,
@@ -198,9 +199,9 @@ class PageBuilder {
                 }
                 const cloudBridgeEventResp = await this.customFetch(
                     { name, range_time: this.range_time },
-                    endPointUrls.addEventBridgeUrl,
+                    settings.endPointUrls.addEventBridgeUrl,
                 );
-                if (cloudBridgeEventResp.ok) {
+                if (!cloudBridgeEventResp.error) {
                     self.displayGoodStatus(
                         notificationAddRange,
                         null,
@@ -225,12 +226,19 @@ class PageBuilder {
     configFormHandle = () => {
         configForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const { access_key, secret_key, bucket_name, region, range_time } =
-                e.target;
+            const {
+                access_key,
+                secret_key,
+                bucket_name,
+                region,
+                range_time,
+                shipping_token,
+            } = e.target;
 
             if (
                 access_key.value === '' ||
                 secret_key.value === '' ||
+                shipping_token.value === '' ||
                 bucket_name.value === '' ||
                 region.value === ''
             ) {
@@ -241,15 +249,26 @@ class PageBuilder {
                 this.awsSecretKey = secret_key.value;
                 this.region = region.value;
                 this.range_time = range_time;
+                this.shipping_token = shipping_token;
                 startTestButton.disabled = false;
             }
         });
     };
     init = () => {
         this.initPage();
-        this.cloudFormationGenerator();
         this.tabLogic();
         this.configFormHandle();
+    };
+
+    testLocal = async () => {
+        document
+            .querySelector('.test-locally')
+            .addEventListener('click', async (e) => {
+                const responseModify = await this.customFetch(
+                    { code: editor.getValue() },
+                    settings.endPointUrls.modifyFileUrl,
+                );
+            });
     };
 }
 

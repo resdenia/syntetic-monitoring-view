@@ -23,7 +23,7 @@ app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
 app.use(mainRoutes);
-app.use('api', creatorRoutes);
+app.use('/api', creatorRoutes);
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`helloworld: listening on port ${port}`);
