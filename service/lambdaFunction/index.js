@@ -30,7 +30,6 @@ require('dotenv').config();
 	
 await page.goto('https://logz.io/');
 
-    await page.setViewport({ width: 1680, height: 877 });
 
     await page.waitForSelector(
         '.container > .row > .hero_section__content_row > .hero_section__header > .hero_section__title',

@@ -10,7 +10,7 @@ Inputs (replace in code):
 */
 // snippet-start:[cloudwatch.JavaScript.events.createclientv3]
 
-const { CloudWatchEventsClient } = require('@aws-sdk/client-cloudwatch-events');
+const { EventBridgeClient } = require('@aws-sdk/client-eventbridge');
 // Set the AWS Region.
 // readonly accessKeyId: string;
 // /**
@@ -19,7 +19,7 @@ const { CloudWatchEventsClient } = require('@aws-sdk/client-cloudwatch-events');
 // readonly secretAccessKey: string;
 const REGION = process.env.REGION; //e.g. "us-east-1"
 // Create an Amazon CloudWatch service client object.
-exports.cweClient = new CloudWatchEventsClient({
+exports.cweClient = new EventBridgeClient({
     region: REGION,
     credentials: {
         accessKeyId: process.env.ACCESS_KEY,

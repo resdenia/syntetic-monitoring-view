@@ -12,7 +12,7 @@ exports.createLambda = async (functionName, description) => {
             S3Key: NAME_OF_ZIP_FILE, // ZIP_FILE_NAME
         },
         FunctionName: functionName || LAMBDA_FUNCTION_NAME,
-        Handler: 'lambdaFunction.index.handler',
+        Handler: 'index.handler',
         Role: process.env.IAM_ROLE_ARN, // IAM_ROLE_ARN; e.g., arn:aws:iam::650138640062:role/v3-lambda-tutorial-lambda-role
         Runtime: 'nodejs16.x',
         Description: description,

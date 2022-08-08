@@ -13,6 +13,7 @@
     "dependencies": {
         "@aws-sdk/client-cloudformation": "^3.142.0",
         "@aws-sdk/client-cloudwatch-events": "^3.142.0",
+        "@aws-sdk/client-eventbridge": "^3.142.0",
         "@aws-sdk/client-lambda": "^3.137.0",
         "@aws-sdk/credential-provider-cognito-identity": "^3.137.0",
         "archiver": "^5.3.1",
