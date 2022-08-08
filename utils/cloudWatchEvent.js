@@ -6,9 +6,9 @@ const {
 
 const { cweClient } = require('./cloudWatchEventsClient.js');
 const { addPermissions } = require('./addPermissions');
-const { CLOUDWATCH_EVENT, LAMBDA_FUNCTION_NAME } = require('./constants');
+const { CLOUDWATCH_EVENT } = require('./constants');
 
-exports.cloudWatchEvent = async (name) => {
+exports.cloudWatchEvent = async (name, range_time) => {
     console.log('function name!!=>', name);
 
     const paramsTarget = {
@@ -23,12 +23,10 @@ exports.cloudWatchEvent = async (name) => {
     const paramsRule = {
         Name: CLOUDWATCH_EVENT,
         RoleArn: process.env.IAM_ROLE_ARN_EVENT, //IAM_ROLE_ARN
-        ScheduleExpression: 'rate(5 minutes)',
+        ScheduleExpression: `rate(${range_time} minutes)`,
         State: 'ENABLED',
     };
-    const paramSource = {
-        Name: 'syntetic-trigger',
-    };
+
     try {
         const dataRule = await cweClient.send(new PutRuleCommand(paramsRule));
         console.log('Success, scheduled rule created; Rule ARN:', dataRule);

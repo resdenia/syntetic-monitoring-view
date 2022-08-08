@@ -44,7 +44,6 @@ exports.uploadZipToS3 = async (req, res, next) => {
     const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
 
     try {
-        console.log(fileRoute);
         const readData = fs.readFileSync(fileRoute);
         let result;
         if (readData) {
@@ -75,10 +74,10 @@ exports.createLambda = async (req, res, next) => {
 };
 
 exports.addEventBridge = async (req, res, next) => {
-    const { name } = req.body;
+    const { name, range_time } = req.body;
 
     try {
-        const resp = await cloudWatchEvent(name);
+        const resp = await cloudWatchEvent(name, range_time);
 
         if (resp) {
             res.statusCode = 200;

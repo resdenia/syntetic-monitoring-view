@@ -17,8 +17,20 @@ editor.session.setMode('ace/mode/javascript');
 const settings = {
     notificationLoaded: '.loaded',
     notificationFailed: '.loaded-fail',
-    statusName: {},
-    endPointUrls: {},
+    statusName: {
+        functionCreated: 'Function Created',
+        zipCreated: 'Zip Created',
+        zipUploaded: 'Zip Uploaded',
+        lambdaCreated: 'Lambda Created',
+        rangeTimeAdded: 'Range time added',
+    },
+    endPointUrls: {
+        modifyFileUrl: '/api/modify-file',
+        createZipUrl: '/api/create-zip',
+        uploadZipUrl: '/api/uploadZip',
+        createLambdaUrl: '/api/create-lambda',
+        addEventBridgeUrl: '/api/add-eventbridge',
+    },
 };
 
 const notificationFileModify = document.querySelector('.fileCreated');
@@ -96,18 +108,7 @@ class PageBuilder {
         }, 10000);
     };
     statusFromAPI = () => {};
-    cloudFormationGenerator = () => {
-        document
-            .querySelector('.cloudFormation-test')
-            .addEventListener('click', async () => {
-                await fetch('/api/create-cfn', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-            });
-    };
+
     displayGoodStatus = (notification, notificationNext, buttonText) => {
         if (notificationNext) {
             notificationNext.style.display = 'flex';
@@ -132,10 +133,10 @@ class PageBuilder {
                 notificationFileModify.style.display = 'flex';
                 const responseModify = await this.customFetch(
                     { code: editor.getValue() },
-                    '/api/modify-file',
+                    endPointUrls.modifyFileUrl,
                 );
 
-                if (!responseModify.error) {
+                if (responseModify.ok) {
                     self.displayGoodStatus(
                         notificationFileModify,
                         notificationZipCreate,
@@ -148,10 +149,10 @@ class PageBuilder {
                 }
                 const responseToZip = await this.customFetch(
                     { message: 'success' },
-                    '/api/create-zip',
+                    endPointUrls.createZipUrl,
                 );
 
-                if (!responseToZip.error) {
+                if (responseToZip.ok) {
                     self.displayGoodStatus(
                         notificationZipCreate,
                         notificationZipUpload,
@@ -165,10 +166,10 @@ class PageBuilder {
 
                 const responseUploadZip = await this.customFetch(
                     {},
-                    '/api/uploadZip',
+                    endPointUrls.uploadZipUrl,
                 );
 
-                if (!responseUploadZip.error) {
+                if (responseUploadZip.ok) {
                     self.displayGoodStatus(
                         notificationZipUpload,
                         notificationLambdaCreate,
@@ -176,10 +177,10 @@ class PageBuilder {
                     );
                     const response = await this.customFetch(
                         { name, description },
-                        '/api/create-lambda',
+                        endPointUrls.createLambdaUrl,
                     );
 
-                    if (!response.error) {
+                    if (response.ok) {
                         self.displayGoodStatus(
                             notificationLambdaCreate,
                             null,
@@ -196,16 +197,15 @@ class PageBuilder {
                     return false;
                 }
                 const cloudBridgeEventResp = await this.customFetch(
-                    { name },
-                    '/api/add-cloudbridge',
+                    { name, range_time: this.range_time },
+                    endPointUrls.addEventBridgeUrl,
                 );
-                if (!cloudBridgeEventResp.error) {
+                if (cloudBridgeEventResp.ok) {
                     self.displayGoodStatus(
                         notificationAddRange,
                         null,
                         'Range time added',
                     );
-                    console.log('cloudAdded');
                 } else {
                     this.errorDisplay(responseUploadZip.error);
                     self.displayFailedStatus(notificationAddRange);
