@@ -14,6 +14,6 @@ router.post('/api/uploadZip', creatorController.uploadZipToS3);
 
 router.post('/api/create-lambda', creatorController.createLambda);
 
-router.post('/api/create-cfn', creatorController.createCfn);
+router.post('/api/add-cloudbridge', creatorController.addEventBridge);
 
 module.exports = router;

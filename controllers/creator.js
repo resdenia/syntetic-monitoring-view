@@ -4,7 +4,6 @@ const { uploadFileOnS3 } = require('../utils/upload-to-bucket');
 const { fileToZip } = require('../utils/zip-creator');
 const { updateFile } = require('../utils/update-function');
 const { createLambda } = require('../utils/lambda-creator');
-const { createCloudFormation } = require('../utils/cloudformation-creator');
 const { cloudWatchEvent } = require('../utils/cloudWatchEvent');
 const { NAME_OF_ZIP_FILE } = require('../utils/constants');
 
@@ -111,7 +110,7 @@ exports.createLambda = async (req, res, next) => {
     }
 };
 
-exports.createCfn = async (req, res, next) => {
+exports.addEventBridge = async (req, res, next) => {
     const { name } = req.body;
 
     try {

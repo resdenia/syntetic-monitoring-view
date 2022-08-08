@@ -231,3 +231,9 @@ h3.title-white {
     display: none;
 	width: 30px;
 }
+.select-control{
+		border-radius: 3px;
+		padding: 4px;
+		min-height: 29px;
+	
+}

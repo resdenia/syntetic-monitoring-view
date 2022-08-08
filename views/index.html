@@ -87,7 +87,21 @@
 											<label for="">Aws Region</label>
 											<input type="text" name="region" id="region" />
 										</div>
-
+										<div class="form-control">
+											<label for="">Aws AccountId</label>
+											<input type="text" name="account_id" id="account_id" />
+										</div>
+										<div class="form-control">
+											<label for="">Range time for send data to the logs</label>
+											<select class="select-control" name="range_time" id="range_time">
+												<option default value="1">1 minute</option>
+												<option value="2">2 minutes</option>
+												<option value="5">5 minutes</option>
+												<option value="10">10 minutes</option>
+												<option value="30">30 minutes</option>
+												<option value="60">60 minutes</option>
+											</select>
+										</div>
 										<div class="button-control">
 											<button class="submission" type="submit">
 												Accept Configs
@@ -295,6 +309,65 @@
 					<div class="notification-item functionCreated">
 						<div class="title-wrapper">
 							<h4 class="title-h4-white">Lambda Creating</h4>
+						</div>
+						<div class="status">
+							<div class="loading">
+								<div class="loadingio-spinner-spin-r97nm33plq8">
+									<div class="ldio-kugicms7vi">
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+										<div>
+											<div></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="loaded"><svg style="enable-background:new 0 0 64 64;" viewBox="0 0 64 64">
+									<g>
+										<g id="Icon-Check" transform="translate(328.000000, 278.000000)">
+											<path class="st0" fill="rgb(59, 196, 155)"
+												d="M-296-222.6c-12.9,0-23.4-10.5-23.4-23.4c0-12.9,10.5-23.4,23.4-23.4     c12.9,0,23.4,10.5,23.4,23.4C-272.6-233.1-283.1-222.6-296-222.6L-296-222.6z M-296-266.9c-11.5,0-20.9,9.4-20.9,20.9     s9.4,20.9,20.9,20.9s20.9-9.4,20.9-20.9S-284.5-266.9-296-266.9L-296-266.9z"
+												id="Fill-43" />
+											<polyline fill="rgb(59, 196, 155)" class="st0" id="Fill-44"
+												points="-298.8,-235.9 -310.7,-247.9 -308.9,-249.7 -298.8,-239.5 -283.1,-255.2      -281.3,-253.4 -298.8,-235.9    " />
+										</g>
+									</g>
+								</svg></div>
+
+							<div class="loaded-fail">
+								<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+									<path fill="red"
+										d="M32,56A24,24,0,1,1,56,32,24,24,0,0,1,32,56Zm0-46A22,22,0,1,0,54,32,22,22,0,0,0,32,10Z" />
+									<path fill="red"
+										d="M41.55,42.55a1,1,0,0,1-.71-.3L21.75,23.16a1,1,0,1,1,1.41-1.41L42.25,40.84a1,1,0,0,1,0,1.41A1,1,0,0,1,41.55,42.55Z" />
+									<path fill="red"
+										d="M22.45,42.55a1,1,0,0,1-.7-.3,1,1,0,0,1,0-1.41L40.84,21.75a1,1,0,1,1,1.41,1.41L23.16,42.25A1,1,0,0,1,22.45,42.55Z" />
+								</svg>
+							</div>
+						</div>
+					</div>
+					<div class="notification-item timeoutAdded">
+						<div class="title-wrapper">
+							<h4 class="title-h4-white">Range time adding</h4>
 						</div>
 						<div class="status">
 							<div class="loading">

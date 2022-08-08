@@ -25,6 +25,7 @@ const notificationFileModify = document.querySelector('.fileCreated');
 const notificationZipCreate = document.querySelector('.fileZip');
 const notificationZipUpload = document.querySelector('.zipUploaded');
 const notificationLambdaCreate = document.querySelector('.functionCreated');
+const notificationAddRange = document.querySelector('.timeoutAdded');
 const inputLambdaName = document.querySelector('#name');
 const inputLambdaDescription = document.querySelector('#description');
 const allTabs = document.querySelectorAll('.tab-control-item');
@@ -38,6 +39,7 @@ class PageBuilder {
         this.awsBucketName = null;
         this.awsRegion = null;
         this.createNewOne = null;
+        this.range_time = null;
     }
     customFetch = async (bodyToSend, url) => {
         return await fetch(`http://localhost:8080${url}`, {
@@ -195,18 +197,18 @@ class PageBuilder {
                 }
                 const cloudBridgeEventResp = await this.customFetch(
                     { name },
-                    '/api/create-cfn',
+                    '/api/add-cloudbridge',
                 );
                 if (!cloudBridgeEventResp.error) {
-                    // self.displayGoodStatus(
-                    // 	notificationLambdaCreate,
-                    // 	null,
-                    // 	'Lambda Created',
-                    // );
+                    self.displayGoodStatus(
+                        notificationAddRange,
+                        null,
+                        'Range time added',
+                    );
                     console.log('cloudAdded');
                 } else {
                     this.errorDisplay(responseUploadZip.error);
-                    self.displayFailedStatus(notificationLambdaCreate);
+                    self.displayFailedStatus(notificationAddRange);
                     return false;
                 }
             });
@@ -223,7 +225,8 @@ class PageBuilder {
     configFormHandle = () => {
         configForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const { access_key, secret_key, bucket_name, region } = e.target;
+            const { access_key, secret_key, bucket_name, region, range_time } =
+                e.target;
 
             if (
                 access_key.value === '' ||
@@ -237,6 +240,7 @@ class PageBuilder {
                 this.awsBucketName = bucket_name.value;
                 this.awsSecretKey = secret_key.value;
                 this.region = region.value;
+                this.range_time = range_time;
                 startTestButton.disabled = false;
             }
         });
