@@ -30,6 +30,7 @@ const settings = {
         uploadZipUrl: '/api/uploadZip',
         createLambdaUrl: '/api/create-lambda',
         addEventBridgeUrl: '/api/add-eventbridge',
+        modifyFileLocalUrl: '/api/modify-file-local',
     },
 };
 
@@ -259,14 +260,14 @@ class PageBuilder {
         this.tabLogic();
         this.configFormHandle();
     };
-
+    validInput = () => {};
     testLocal = async () => {
         document
             .querySelector('.test-locally')
             .addEventListener('click', async (e) => {
                 const responseModify = await this.customFetch(
                     { code: editor.getValue() },
-                    settings.endPointUrls.modifyFileUrl,
+                    settings.endPointUrls.modifyFileLocalUrl,
                 );
             });
     };

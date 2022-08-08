@@ -237,3 +237,6 @@ h3.title-white {
 		min-height: 29px;
 	
 }
+.link-har.hidden{
+	display: none;
+}

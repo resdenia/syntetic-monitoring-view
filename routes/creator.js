@@ -14,4 +14,6 @@ router.post('/create-lambda', creatorController.createLambda);
 //addEventBridge
 router.post('/add-eventbridge', creatorController.addEventBridge);
 
+router.post('/modify-file-local', creatorController.modifyFileLocally);
+
 module.exports = router;

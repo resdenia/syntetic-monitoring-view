@@ -5,7 +5,6 @@ const { NAME_OF_ZIP_FILE, LAMBDA_FUNCTION_NAME } = require('./constants');
 // Set the parameters.
 
 exports.createLambda = async (functionName, description) => {
-    console.log(NAME_OF_ZIP_FILE);
     const params = {
         Code: {
             S3Bucket: process.env.BUCKET_NAME, // BUCKET_NAME

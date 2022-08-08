@@ -1,6 +1,12 @@
 const AWS = require('aws-sdk');
 
-exports.uploadFileOnS3 = async (fileName, fileData) => {
+exports.uploadFileOnS3 = async (
+    fileName,
+    fileData,
+    access_key,
+    secret_key,
+    bucket_name,
+) => {
     try {
         const statusError = {
             status: false,
@@ -8,12 +14,12 @@ exports.uploadFileOnS3 = async (fileName, fileData) => {
             message: '',
         };
         AWS.config.update({
-            accessKeyId: process.env.ACCESS_KEY,
-            secretAccessKey: process.env.SECRET_KEY,
+            accessKeyId: access_key || process.env.ACCESS_KEY,
+            secretAccessKey: secret_key || process.env.SECRET_KEY,
         });
         const s3bucket = new AWS.S3();
         const params = {
-            Bucket: process.env.BUCKET_NAME,
+            Bucket: bucket_name || process.env.BUCKET_NAME,
             Key: fileName,
             Body: fileData,
             ContentType: 'application/zip',

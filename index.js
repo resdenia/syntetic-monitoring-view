@@ -1,11 +1,3 @@
-// index.js
-
-//DONE! TODO: Add custom code from the user
-//DONE! TODO: Install an app(probably we can upload it already)
-//DONE! TODO: Upload to S3 bucket
-// TODO: Create AWS Lambda Function(take name of the function)
-// TODO: Attach to lambda function CloudWatch Events
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const shell = require('shelljs');

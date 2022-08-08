@@ -41,13 +41,21 @@ exports.createZip = async (req, res, next) => {
 };
 
 exports.uploadZipToS3 = async (req, res, next) => {
+    //
+    const { access_key, secret_key, bucket_name } = req.body;
     const fileRoute = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
 
     try {
         const readData = fs.readFileSync(fileRoute);
         let result;
         if (readData) {
-            result = await uploadFileOnS3(NAME_OF_ZIP_FILE, readData);
+            result = await uploadFileOnS3(
+                NAME_OF_ZIP_FILE,
+                readData,
+                access_key,
+                secret_key,
+                bucket_name,
+            );
         } else {
             throw Error('Failed to upload data');
         }
@@ -60,6 +68,13 @@ exports.uploadZipToS3 = async (req, res, next) => {
 };
 
 exports.createLambda = async (req, res, next) => {
+    // process.env.IAM_ROLE_ARN
+    // process.env.TOKEN
+    // process.env.BUCKET_NAME
+    // process.env.ACCESS_KEY,
+    // process.env.SECRET_KEY,
+    // REGION
+
     const { name, description } = req.body;
 
     try {
@@ -83,6 +98,15 @@ exports.addEventBridge = async (req, res, next) => {
             res.statusCode = 200;
             res.send({ error: false, message: 'Lambda was created' });
         }
+    } catch (err) {
+        console.log(err);
+        res.status(400).send({ error: true, err });
+    }
+};
+
+exports.modifyFileLocally = async (req, res, next) => {
+    const { code } = req.body;
+    try {
     } catch (err) {
         console.log(err);
         res.status(400).send({ error: true, err });
