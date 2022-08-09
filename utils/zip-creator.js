@@ -14,22 +14,33 @@ exports.fileToZip = async () => {
         const archive = archiver('zip', { zlib: { level: 9 } });
         const stream = fs.createWriteStream(outPath);
         return new Promise((resolve, reject) => {
-            archive
-                .directory(sourceDir, false)
-                .on('error', (err) => {
-                    console.log(err);
-                    reject(err);
-                })
-                .pipe(stream);
+            try {
+                archive
+                    .directory(sourceDir, false)
+                    .on('error', (err) => {
+                        return reject({
+                            error: true,
+                            err,
+                        });
+                    })
+                    .pipe(stream);
 
-            stream.on('close', () => resolve('done3'));
-            archive.finalize();
+                stream.on('close', () =>
+                    resolve({ error: false, message: 'Zip Created' }),
+                );
+                archive.finalize();
+            } catch (err) {
+                console.log(err);
+                reject({
+                    error: true,
+                    err,
+                });
+            }
         });
     } catch (err) {
-        console.log(err);
         return {
-            status: false,
-            message: 'ZipNotCreated',
+            error: true,
+            err,
         };
     }
 };

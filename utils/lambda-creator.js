@@ -35,11 +35,20 @@ exports.createLambda = async (functionName, description) => {
 
         return new Promise((resolve, reject) => {
             lambda.createFunction(params, function (err, data) {
-                if (err) reject(err); // an error occurred
-                else resolve(data); // successful response
+                if (err)
+                    reject({
+                        error: true,
+                        err,
+                    });
+                // an error occurred
+                else resolve({ error: false, data }); // successful response
             });
         });
     } catch (err) {
         console.log('Error', err); // an error occurred
+        return {
+            error: true,
+            err,
+        };
     }
 };

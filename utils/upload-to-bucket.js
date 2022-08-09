@@ -8,11 +8,6 @@ exports.uploadFileOnS3 = async (
     bucket_name,
 ) => {
     try {
-        const statusError = {
-            status: false,
-            error: '',
-            message: '',
-        };
         AWS.config.update({
             accessKeyId: access_key || process.env.ACCESS_KEY,
             secretAccessKey: secret_key || process.env.SECRET_KEY,
@@ -20,6 +15,7 @@ exports.uploadFileOnS3 = async (
         const s3bucket = new AWS.S3();
         const params = {
             Bucket: bucket_name || process.env.BUCKET_NAME,
+            // Bucket: '11',
             Key: fileName,
             Body: fileData,
             ContentType: 'application/zip',
@@ -28,14 +24,14 @@ exports.uploadFileOnS3 = async (
         return new Promise((resolve, reject) => {
             s3bucket.upload(params, function (err, res) {
                 if (err) {
-                    reject(err);
+                    reject({ error: true, err });
                 } else {
-                    resolve('done uploaded');
+                    resolve({ error: false, message: 'done uploaded' });
                 }
             });
         });
     } catch (err) {
         console.log(err);
-        return err;
+        return { error: true, err };
     }
 };

@@ -14,14 +14,14 @@ exports.modifyFile = async (req, res, next) => {
     const { code } = req.body;
 
     try {
-        const data = await updateFile(code)
-            .then((status) => status)
-            .catch((err) => console.log(err));
+        const data = await updateFile(code);
+        if (data.error) {
+            throw Error(data.err);
+        }
         res.statusCode = 201;
         res.send({ error: false, message: 'File modified' });
     } catch (err) {
-        console.log(err);
-        res.status(400).send({ error: true, err });
+        res.status(400).send({ error: true, errorData: err.toString() });
     }
 };
 
@@ -32,14 +32,16 @@ exports.createZip = async (req, res, next) => {
                 return result;
             })
             .catch((err) => {
-                console.log(err);
-                return result;
+                return err;
             });
+
+        if (resp.error) {
+            throw Error(resp.err);
+        }
         res.statusCode = 201;
         res.send({ error: false, message: 'Zip Created' });
     } catch (err) {
-        console.log(err);
-        res.status(400).send({ error: true, err });
+        res.status(400).send({ error: true, errorData: err.toString() });
     }
 };
 
@@ -62,11 +64,14 @@ exports.uploadZipToS3 = async (req, res, next) => {
         } else {
             throw Error('Failed to upload data');
         }
+        if (result.error) {
+            throw Error(result.err);
+        }
         res.statusCode = 201;
         res.send({ error: false, message: 'Upload zip to S3 Bucket' });
     } catch (err) {
-        console.log(err);
-        res.status(400).send({ error: true, err });
+        console.log('line71', err);
+        res.status(400).send({ error: true, errorData: err });
     }
 };
 

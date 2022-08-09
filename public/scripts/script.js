@@ -67,12 +67,16 @@ class PageBuilder {
         })
             .then((res) => {
                 console.log(res);
-                return res.json();
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    throw res;
+                }
             })
             .catch((err) => {
                 console.log(err);
                 //display error
-                return err;
+                return err.json();
             });
     };
     startTest = () => {};
@@ -98,16 +102,22 @@ class PageBuilder {
         });
     };
     errorDisplay = (errorMessage) => {
-        const errorContainer = document.querySelector('.errorStatus');
-        const errorText = document.querySelector('.errorMessage');
-        errorContainer.style.display = 'block';
-        errorContainer.style.bottom = '10px';
-        errorText.textContent = errorMessage;
-        setTimeout(() => {
-            errorContainer.style.bottom = '-20px';
-            errorContainer.style.display = 'none';
-            errorText.textContent = '';
-        }, 10000);
+        try {
+            const errorContainer = document.querySelector('.errorStatus');
+            const errorText = document.querySelector('.errorMessage');
+            errorContainer.style.display = 'block';
+            errorContainer.style.bottom = '10px';
+            if (errorMessage.err && errorMessage.err.code) {
+                errorText.textContent = `${errorMessage.err.code}: ${errorMessage.err.message}`;
+            } else {
+                errorText.textContent = errorMessage;
+            }
+            setTimeout(() => {
+                errorContainer.style.bottom = '-20px';
+                errorContainer.style.display = 'none';
+                errorText.textContent = '';
+            }, 10000);
+        } catch (err) {}
     };
     statusFromAPI = () => {};
 
@@ -137,7 +147,6 @@ class PageBuilder {
                     { code: editor.getValue() },
                     settings.endPointUrls.modifyFileUrl,
                 );
-
                 if (!responseModify.error) {
                     self.displayGoodStatus(
                         notificationFileModify,
@@ -145,7 +154,7 @@ class PageBuilder {
                         'Function Created',
                     );
                 } else {
-                    this.errorDisplay(responseModify.error);
+                    this.errorDisplay(responseModify.errorData);
                     self.displayFailedStatus(notificationFileModify);
                     return false;
                 }
@@ -153,7 +162,7 @@ class PageBuilder {
                     { message: 'success' },
                     settings.endPointUrls.createZipUrl,
                 );
-
+                console.log('line162', responseToZip);
                 if (!responseToZip.error) {
                     self.displayGoodStatus(
                         notificationZipCreate,
@@ -161,7 +170,7 @@ class PageBuilder {
                         'Zip Created',
                     );
                 } else {
-                    this.errorDisplay(responseToZip.error);
+                    this.errorDisplay(responseToZip.errorData);
                     self.displayFailedStatus(notificationZipCreate);
                     return false;
                 }
@@ -170,7 +179,7 @@ class PageBuilder {
                     {},
                     settings.endPointUrls.uploadZipUrl,
                 );
-
+                console.log('line179', responseUploadZip);
                 if (!responseUploadZip.error) {
                     self.displayGoodStatus(
                         notificationZipUpload,
@@ -189,12 +198,12 @@ class PageBuilder {
                             'Lambda Created',
                         );
                     } else {
-                        this.errorDisplay(responseUploadZip.error);
+                        this.errorDisplay(response.errorData);
                         self.displayFailedStatus(notificationLambdaCreate);
                         return false;
                     }
                 } else {
-                    this.errorDisplay(response.error);
+                    this.errorDisplay(responseUploadZip.errorData);
                     self.displayFailedStatus(notificationZipUpload);
                     return false;
                 }

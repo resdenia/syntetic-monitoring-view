@@ -11,24 +11,19 @@ const readWriteAsync = async (code, filePath) => {
         const resultToWrite = newValue.concat(fileEnds).join('\n');
         return new Promise((resolve, reject) => {
             fs.writeFile(filePath, resultToWrite, 'utf-8', function (err) {
-                if (err) reject(err);
+                if (err) reject({ error: true, err });
                 resolve({ error: false, message: 'Function created' });
             });
         });
     } catch (err) {
-        console.log(err);
         return {
             error: true,
-            message: err,
+            err,
         };
     }
 };
 
 exports.updateFile = async (code) => {
-    const statusError = {
-        error: false,
-        message: '',
-    };
     const filePath = path.join(
         __dirname,
         '..',
@@ -36,16 +31,17 @@ exports.updateFile = async (code) => {
         'lambdaFunction',
         'index.js',
     );
-    // Test
-    // const filePath = path.join(__dirname, '..', 'mock', 'file-write.js');
+
     try {
         const fileStatus = await readWriteAsync(code, filePath);
-        console.log('File updated');
+        if (fileStatus.error) {
+            throw Error(fileStatus.err);
+        }
         return fileStatus;
     } catch (err) {
-        console.log(err);
-        statusError.error = true;
-        statusError.message = err;
+        return {
+            error: true,
+            err,
+        };
     }
-    return statusError;
 };
