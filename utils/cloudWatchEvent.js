@@ -9,6 +9,8 @@ const { addPermissions } = require('./addPermissions');
 const { CLOUDWATCH_EVENT } = require('./constants');
 
 exports.cloudWatchEvent = async (name, range_time) => {
+    console.log('function name!!=>', name);
+    console.log('function range_time=>', range_time);
     const paramsTarget = {
         Rule: CLOUDWATCH_EVENT,
         Targets: [
@@ -31,14 +33,17 @@ exports.cloudWatchEvent = async (name, range_time) => {
         const dataRule = await cweClient.send(new PutRuleCommand(paramsRule));
         console.log('Success, scheduled rule created; Rule ARN:', dataRule);
 
-        const dataEVEnt = await addPermissions(name);
-        console.log('Success, add permissions:', dataEVEnt);
+        const dataPermissions = await addPermissions(name);
+        if (dataPermissions.error) {
+            throw Error(dataPermissions.err);
+        }
+        console.log('Success, add permissions:', dataPermissions);
         const data = await cweClient.send(new PutTargetsCommand(paramsTarget));
         console.log('Success, target added; requestID: ', data);
 
-        return { data, dataRule, dataEVEnt }; // For unit tests.
+        return { data, dataRule, dataPermissions }; // For unit tests.
     } catch (err) {
-        console.log(err);
+        console.log('line47,', err);
         return err;
     }
 };

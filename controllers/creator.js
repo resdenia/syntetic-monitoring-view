@@ -102,14 +102,17 @@ exports.addEventBridge = async (req, res, next) => {
 
     try {
         const resp = await cloudWatchEvent(name, range_time);
-
+        console.log('line105,', resp);
+        if (resp.error) {
+            throw Error(resp.err);
+        }
         if (resp) {
             res.statusCode = 200;
             res.send({ error: false, message: 'Lambda was created' });
         }
     } catch (err) {
-        console.log(err);
-        res.status(400).send({ error: true, err });
+        console.log('line,114', err);
+        res.status(400).send({ error: true, errorData: err });
     }
 };
 

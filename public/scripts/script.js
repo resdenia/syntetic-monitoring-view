@@ -102,6 +102,7 @@ class PageBuilder {
         });
     };
     errorDisplay = (errorMessage) => {
+        console.log(errorMessage);
         try {
             const errorContainer = document.querySelector('.errorStatus');
             const errorText = document.querySelector('.errorMessage');
@@ -162,7 +163,6 @@ class PageBuilder {
                     { message: 'success' },
                     settings.endPointUrls.createZipUrl,
                 );
-                console.log('line162', responseToZip);
                 if (!responseToZip.error) {
                     self.displayGoodStatus(
                         notificationZipCreate,
@@ -179,7 +179,6 @@ class PageBuilder {
                     {},
                     settings.endPointUrls.uploadZipUrl,
                 );
-                console.log('line179', responseUploadZip);
                 if (!responseUploadZip.error) {
                     self.displayGoodStatus(
                         notificationZipUpload,
@@ -194,7 +193,7 @@ class PageBuilder {
                     if (!response.error) {
                         self.displayGoodStatus(
                             notificationLambdaCreate,
-                            null,
+                            notificationAddRange,
                             'Lambda Created',
                         );
                     } else {
@@ -218,7 +217,8 @@ class PageBuilder {
                         'Range time added',
                     );
                 } else {
-                    this.errorDisplay(responseUploadZip.error);
+                    console.log(cloudBridgeEventResp);
+                    this.errorDisplay(cloudBridgeEventResp.errorData);
                     self.displayFailedStatus(notificationAddRange);
                     return false;
                 }
