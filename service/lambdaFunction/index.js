@@ -28,7 +28,7 @@ require('dotenv').config();
 			const playwrightHar = new PlaywrightHar(page);
 			await playwrightHar.start();
 	
-
+console.log('ss')
       harData = await playwrightHar.stop();
 } catch (error) {
 	throw error;

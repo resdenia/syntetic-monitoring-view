@@ -70,7 +70,6 @@ exports.uploadZipToS3 = async (req, res, next) => {
         res.statusCode = 201;
         res.send({ error: false, message: 'Upload zip to S3 Bucket' });
     } catch (err) {
-        console.log('line71', err);
         res.status(400).send({ error: true, errorData: err });
     }
 };
@@ -87,12 +86,14 @@ exports.createLambda = async (req, res, next) => {
 
     try {
         const lambdaResp = await createLambda(name, description);
-        console.log(lambdaResp);
+        if (lambdaResp.error) {
+            throw Error(lambdaResp.err);
+        }
         res.statusCode = 200;
         res.send({ error: false, message: 'Lambda was created' });
     } catch (err) {
         console.log(err);
-        res.status(400).send({ error: true, err });
+        res.status(400).send({ error: true, errorData: err });
     }
 };
 
