@@ -5,7 +5,6 @@ const convertHarToJSON = require('./convertHarToJSON');
 
 const playwright = require('playwright-aws-lambda');
 const { PlaywrightHar } = require('playwright-har');
-console.log(process.env.TOKEN);
 const token = process.env.TOKEN;
 const logger = require('logzio-nodejs').createLogger({
     token: token,
