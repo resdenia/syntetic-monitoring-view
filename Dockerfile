@@ -11,5 +11,6 @@ RUN npm install
 COPY ./ ./
 
 #Default command
+EXPOSE 8080
 
 CMD ["npm", "start"]

@@ -4,3 +4,6 @@ lambdaFunction.zip
 responseCreationLambda.json
 archive_cloudformation-creator.js
 local.har
+/service/selenium-v2
+/service/selenium
+/service/selenium_old
