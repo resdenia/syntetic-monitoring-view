@@ -47,7 +47,18 @@ const convertHarToJSON = (harFile) => {
                 flatEntries.push(Object.values(flatEntry));
             }
         });
-        return { error: false, flatEntries };
+        const result = [];
+        const headers = flatEntries.shift();
+
+        flatEntries.forEach((line) => {
+            const obj = {};
+            line.forEach((box, index) => {
+                obj[headers[index]] = box;
+            });
+            result.push(obj);
+        });
+
+        return { error: false, result };
     } catch (err) {
         console.log(err);
         return { error: true, message: 'Failed to convert Har file' };
