@@ -8,3 +8,9 @@ local.har
 /service/selenium-v2
 /service/selenium
 /service/selenium_old
+/selenium-test
+dump.js
+/output
+/selenium_old
+/selenium-test
+/selenium-v2

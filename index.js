@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const shell = require('shelljs');
 const path = require('path');
 require('dotenv').config();
 
@@ -18,5 +17,5 @@ app.use(mainRoutes);
 app.use('/api', creatorRoutes);
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-    console.log(`helloworld: listening on port ${port}`);
+    console.log(`synthetic-scripting: listening on port ${port}`);
 });

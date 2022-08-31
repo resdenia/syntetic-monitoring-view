@@ -1,90 +1,70 @@
 module.exports = {
-    startFile: `require('dotenv').config();
-	const fs = require('fs');
+    startFile: `const playwright = require('playwright-aws-lambda');
 	const path = require('path');
-	const  convertHarToJSON  = require('./convertHarToJSON');
+	const readSendData = require('./rsData');
 
-	const playwright = require('playwright-aws-lambda');
-	const { PlaywrightHar } = require('playwright-har');
-	const parseHarFile = require('./parseHar');
-	const logger = require('logzio-nodejs').createLogger({
-		token: process.env.TOKEN,
-		protocol: 'https',
-		host: 'listener.logz.io',
-		port: '8071',
-		type: 'syntetic-scripting', // OPTIONAL (If none is set, it will be 'nodejs')
-		sendIntervalMs: 1000,
-	});
 	function sleep(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
-	exports.handler = async (event, context) => {
-		let browser = null;
-		let harData = null;
+	exports.handler = async (event) => {
+		let context = null;
+		let err = null;
+		let page = null;
 		try {
-			browser = await playwright.launchChromium();
-			const context = await browser.newContext();
-	
-			const page = await context.newPage();
-			const playwrightHar = new PlaywrightHar(page);
-			await playwrightHar.start();
+			browser = await playwright.launchChromium(false);
+			context = await browser.newContext({
+				recordHar: {
+					path: path.join(__dirname, '..', '..', 'tmp', 'example.har'),
+					mode: 'full',
+					content: 'omit',
+				},
+			});
+			page = await context.newPage();
+			
 	`,
-    endFile: `      harData = await playwrightHar.stop();
+    endFile: `
+
 } catch (error) {
-	throw error;
-} finally {
-	if (browser) {
-		await browser.close();
+	err = error.message;
+	} finally {
+		if (browser) {
+			await context.close();
+			await browser.close();
+		}
 	}
-}
-try {
-	// const parsedData = parseHarFile(harData);
+	readSendData(err);
+    await sleep(4000);
+    return true;
+};`,
+    startFileLocally: `const playwright = require('playwright-aws-lambda');
 
-	// parsedData.probes[0].requests.forEach((log) => {
-	//     logger.log({ message: log });
-	// });
-	const parsedData = convertHarToJSON(harData);
-		logger.log(parsedData);
-
-} catch (err) {
-	console.log(err);
-}
-logger.sendAndClose();
-await sleep(4000);
-
-return true;
+	const readSendData = require('./rsData');
+	
+	const handler = async () => {
+		let context = null;
+		let err = null;
+		let page = null;
+		try {
+			browser = await playwright.launchChromium(false);
+			context = await browser.newContext({
+				recordHar: {
+					path: './capture-hars/example.har',
+					mode: 'full',
+					content: 'omit',
+				},
+			});
+			page = await context.newPage();
+	`,
+    endFileLocally: `    } catch (error) {
+		err= error.message;
+    } finally {
+        if (browser) {
+            await context.close();
+            await browser.close();
+        }
+    }
+    readSendData(process.argv[2], err, process.argv[3], process.argv[4]);
+    return true;
 };
-`,
-    startFileLocally: `require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
-const convertHarToJSON = require('./convertHarToJSON');
-const playwright = require('playwright-aws-lambda');
-const { PlaywrightHar } = require('playwright-har');
-
-
-const handler = async (event, context) => {
-	let browser = null;
-	let harData = null;
-	try {
-		browser = await playwright.launchChromium();
-		const context = await browser.newContext();
-
-		const page = await context.newPage();
-		const playwrightHar = new PlaywrightHar(page);
-		await playwrightHar.start();
-`,
-    endFileLocally: `      harData = await playwrightHar.stop('./public/output/local.har');
-} catch (error) {
-throw error;
-} finally {
-if (browser) {
-	await browser.close();
-}
-}
-
-return true;
-};
-handler();
-`,
+handler();`,
 };

@@ -1,15 +1,14 @@
 const fs = require('fs');
-const shell = require('shelljs');
 const archiver = require('archiver');
 const path = require('path');
-const { NAME_OF_ZIP_FILE } = require('./constants');
-// create a file to stream archive data to.
-const outPath = path.join(__dirname, '..', NAME_OF_ZIP_FILE);
+const logger = require('./logger');
+
 const sourceDir = path.join(__dirname, '..', 'service', 'lambdaFunction');
 
-// const sourceDir = __dirname + '/service/lambdaFunction';
-
-exports.fileToZip = async () => {
+exports.fileToZip = async (name) => {
+    const nameZip =
+        name.split(' ').length > 0 ? name.split(' ').join('-') : name;
+    const outPath = path.join(__dirname, '..', `${nameZip}.zip`);
     try {
         const archive = archiver('zip', { zlib: { level: 9 } });
         const stream = fs.createWriteStream(outPath);
@@ -18,7 +17,7 @@ exports.fileToZip = async () => {
                 archive
                     .directory(sourceDir, false)
                     .on('error', (err) => {
-                        return reject({
+                        reject({
                             error: true,
                             err,
                         });
@@ -30,7 +29,7 @@ exports.fileToZip = async () => {
                 );
                 archive.finalize();
             } catch (err) {
-                console.log(err);
+                logger(err);
                 reject({
                     error: true,
                     err,
@@ -38,6 +37,7 @@ exports.fileToZip = async () => {
             }
         });
     } catch (err) {
+        logger(err);
         return {
             error: true,
             err,

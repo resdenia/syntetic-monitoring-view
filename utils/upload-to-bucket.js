@@ -1,5 +1,12 @@
 const AWS = require('aws-sdk');
-
+const { logger } = require('./logger');
+/**
+ * @param  {string} fileName
+ * @param  {string} fileData
+ * @param  {string} access_key
+ * @param  {string} secret_key
+ * @param  {string} bucket_name
+ */
 exports.uploadFileOnS3 = async (
     fileName,
     fileData,
@@ -9,13 +16,12 @@ exports.uploadFileOnS3 = async (
 ) => {
     try {
         AWS.config.update({
-            accessKeyId: access_key || process.env.ACCESS_KEY,
-            secretAccessKey: secret_key || process.env.SECRET_KEY,
+            accessKeyId: access_key,
+            secretAccessKey: secret_key,
         });
         const s3bucket = new AWS.S3();
         const params = {
-            Bucket: bucket_name || process.env.BUCKET_NAME,
-            // Bucket: '11',
+            Bucket: bucket_name,
             Key: fileName,
             Body: fileData,
             ContentType: 'application/zip',
@@ -31,7 +37,7 @@ exports.uploadFileOnS3 = async (
             });
         });
     } catch (err) {
-        console.log(err);
+        logger(err);
         return { error: true, err };
     }
 };
