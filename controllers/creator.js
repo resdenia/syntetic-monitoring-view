@@ -33,12 +33,9 @@ exports.createZip = async (req, res) => {
     try {
         const resp = await fileToZip(name)
             .then((result) => {
-                console.log(result);
                 return result;
             })
-            .catch((err) => {
-                return err;
-            });
+            .catch((err) => err);
 
         if (resp.error) {
             throw Error(resp.err);
@@ -167,7 +164,7 @@ exports.createZipCF = async (req, res) => {
 
         await fileToZipCF();
 
-        let filetext = fs.readFileSync(
+        const filetext = fs.readFileSync(
             path.join(__dirname, '..', 'cloudFormation.zip'),
         );
 

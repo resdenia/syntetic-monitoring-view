@@ -1,7 +1,6 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
-const { getAccountId } = require('./getAccountId');
 const { logger } = require('./logger');
 
 const isRoleExists = async (iam, roleName) => {
