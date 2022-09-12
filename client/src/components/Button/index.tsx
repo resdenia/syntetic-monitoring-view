@@ -11,11 +11,6 @@ const ButtonYellow = styled.button`
     border: 0px;
     padding: 6px 10px;
     cursor: pointer;
-
-    .button-grey {
-    }
-    .transparent-button {
-    }
 `;
 const ButtonWhite = styled.button`
     font-family: 'Roboto';
@@ -29,7 +24,6 @@ const ButtonWhite = styled.button`
     border-radius: 3px;
     padding: 5px 10px;
     cursor: pointer;
-    margin-top: 12px;
 `;
 const ButtonTransparent = styled.button`
     font-weight: 500;

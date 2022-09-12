@@ -14,22 +14,34 @@ const CodeEditorWrapper = styled.div`
     overflow: hidden;
 `;
 
-const CodeEditor: FunctionComponent = () => {
+type Props = {
+    codeSnippet: string;
+    setCodeSnippet: (val: string) => void;
+};
+const CodeEditor: FunctionComponent<Props> = ({
+    setCodeSnippet,
+    codeSnippet,
+}) => {
     const editorRef = useRef(null);
 
-    function handleEditorDidMount(editor: any, monaco: any) {
+    const handleEditorDidMount = (editor: any, monaco: any) => {
         // here is the editor instance
         // you can store it in `useRef` for further usage
         editorRef.current = editor;
-    }
+    };
+
+    const onChangeHandler = (value: any, event: any) => {
+        setCodeSnippet(value);
+    };
 
     return (
         <CodeEditorWrapper>
             <Editor
                 height='90vh'
                 defaultLanguage='javascript'
-                defaultValue='// some comment'
+                defaultValue={codeSnippet}
                 onMount={handleEditorDidMount}
+                onChange={onChangeHandler}
             />
         </CodeEditorWrapper>
     );

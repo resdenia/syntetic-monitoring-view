@@ -13,7 +13,10 @@ const ButtonWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
 `;
-
+const ButtonRow = styled.div`
+    margin-right: 15px;
+    margin-left: 15px;
+`;
 type Props = {
     methodTest: string;
     onChangeStep: (name: string) => void;
@@ -26,46 +29,48 @@ const ButtonContainer: FunctionComponent<Props> = ({
 }) => {
     return (
         <ButtonWrapper>
-            {activeStep === 'edit_code' ? (
-                <Button
-                    onClick={() => {
-                        onChangeStep('deploy');
-                    }}
-                    type='yellow'
-                >
-                    Next
-                </Button>
-            ) : (
-                <>
+            <ButtonRow>
+                {activeStep === 'edit_code' ? (
                     <Button
                         onClick={() => {
-                            onChangeStep('edit_code');
+                            onChangeStep('deploy');
                         }}
-                        type='transparent'
+                        type='yellow'
                     >
-                        Back
+                        Next
                     </Button>
-                    {methodTest === 'Cloud' ? (
+                ) : (
+                    <>
                         <Button
                             onClick={() => {
-                                onChangeStep('deploy');
+                                onChangeStep('edit_code');
                             }}
-                            type='yellow'
+                            type='transparent'
                         >
-                            Deploy
+                            Back
                         </Button>
-                    ) : (
-                        <Button
-                            onClick={() => {
-                                onChangeStep('donwload');
-                            }}
-                            type='yellow'
-                        >
-                            Download
-                        </Button>
-                    )}
-                </>
-            )}
+                        {methodTest === 'Cloud' ? (
+                            <Button
+                                onClick={() => {
+                                    onChangeStep('cloud');
+                                }}
+                                type='yellow'
+                            >
+                                Deploy
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={() => {
+                                    onChangeStep('download');
+                                }}
+                                type='yellow'
+                            >
+                                Download
+                            </Button>
+                        )}
+                    </>
+                )}
+            </ButtonRow>
         </ButtonWrapper>
     );
 };

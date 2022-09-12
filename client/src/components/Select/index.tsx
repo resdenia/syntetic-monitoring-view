@@ -1,7 +1,6 @@
 import React, {
     FunctionComponent,
     useRef,
-    useEffect,
     useState,
     useLayoutEffect,
 } from 'react';
@@ -21,6 +20,9 @@ const LabelSelect = styled.div`
     cursor: pointer;
     height: 30px;
     padding: 6px 8px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
 `;
 
 const DropdownList = styled.ul`
@@ -60,6 +62,15 @@ const DropdownListElement = styled.li`
         color: #8b8c8e;
     }
 `;
+
+const ArrowIcon = styled.svg`
+    transition: 0.3s all ease-in-out;
+
+    &.animate {
+        transform: rotate(180deg);
+    }
+`;
+
 type Option = {
     name: string;
     default: boolean;
@@ -122,6 +133,17 @@ const Select: FunctionComponent<Props> = ({
         <>
             <LabelSelect ref={ref} onClick={onOpen}>
                 {currentValue}
+                <ArrowIcon
+                    className={`${openDropDown ? 'animate' : ''}`}
+                    width='10'
+                    height='7'
+                    viewBox='0 0 10 7'
+                >
+                    <path
+                        d='M1.18164 0.539062L5 4.37695L8.81836 0.539062L10 1.71094L5 6.71094L0 1.71094L1.18164 0.539062Z'
+                        fill='#AFAFAF'
+                    />
+                </ArrowIcon>
             </LabelSelect>
             <DropdownList className={`${openDropDown ? 'open' : ''}`}>
                 {renderOptions()}

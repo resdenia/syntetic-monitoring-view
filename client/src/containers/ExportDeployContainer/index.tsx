@@ -12,12 +12,15 @@ import Toggle from '../../components/Toggle';
 import Select from '../../components/Select';
 import Label from '../../components/Label';
 import Input from '../../components/Input';
+import Tooltip from '../../components/Tooltip';
 const ContainerSteps = styled.div`
     background: #fff;
     padding: 24px;
     border: 1px solid #e7e7e7;
     border-radius: 4px;
     margin-bottom: 24px;
+    margin-left: 15px;
+    margin-right: 15px;
 `;
 
 const TopWrapper = styled.div`
@@ -113,6 +116,7 @@ const ExportDeploy: FunctionComponent<Props> = ({
                     <FormControl>
                         <Label>
                             <IconStar>*</IconStar> Function Name
+                            <Tooltip>this is tooltip</Tooltip>
                         </Label>
                         <Input
                             name='name'
@@ -133,6 +137,7 @@ const ExportDeploy: FunctionComponent<Props> = ({
                     <FormControl>
                         <Label>
                             <IconStar>*</IconStar> Logz.io logs token
+                            <Tooltip>this is tooltip</Tooltip>
                         </Label>
                         <Input
                             name='token'
@@ -151,6 +156,7 @@ const ExportDeploy: FunctionComponent<Props> = ({
                     <FormControl>
                         <Label>
                             <IconStar>*</IconStar> Logz.io Listener
+                            <Tooltip>this is tooltip</Tooltip>
                         </Label>
                         <Input
                             name='listener'
@@ -169,7 +175,9 @@ const ExportDeploy: FunctionComponent<Props> = ({
                 </TwoColumns>
                 <TwoColumns>
                     <FormControlDescription>
-                        <Label> Description</Label>
+                        <Label>
+                            Description <Tooltip>this is tooltip</Tooltip>
+                        </Label>
                         <Input
                             name='desciption'
                             type='text'
@@ -187,6 +195,7 @@ const ExportDeploy: FunctionComponent<Props> = ({
                     <FormControlSection>
                         <Label>
                             <IconStar>*</IconStar> Scheduling Rate
+                            <Tooltip>this is tooltip</Tooltip>
                         </Label>
                         <Select
                             options={availableTimeRange}
@@ -198,7 +207,8 @@ const ExportDeploy: FunctionComponent<Props> = ({
                 <TwoColumns>
                     <FormControl>
                         <Label>
-                            <IconStar>*</IconStar> Bucket name{' '}
+                            <IconStar>*</IconStar> Bucket name
+                            <Tooltip>this is tooltip</Tooltip>
                         </Label>
                         <Input
                             name='bucketName'
@@ -217,6 +227,7 @@ const ExportDeploy: FunctionComponent<Props> = ({
                     <FormControl>
                         <Label>
                             <IconStar>*</IconStar>Region
+                            <Tooltip>this is tooltip</Tooltip>
                         </Label>
                         <Input
                             name='region'
@@ -237,7 +248,8 @@ const ExportDeploy: FunctionComponent<Props> = ({
                     <TwoColumns>
                         <FormControl>
                             <Label>
-                                <IconStar>*</IconStar> Access key{' '}
+                                <IconStar>*</IconStar> Access key
+                                <Tooltip>this is tooltip</Tooltip>
                             </Label>
                             <Input
                                 name='accessKey'
@@ -256,6 +268,7 @@ const ExportDeploy: FunctionComponent<Props> = ({
                         <FormControl>
                             <Label>
                                 <IconStar>*</IconStar> Secret Key
+                                <Tooltip>this is tooltip</Tooltip>
                             </Label>
                             <Input
                                 name='secretKey'
